@@ -8,7 +8,7 @@ Practical Inference for Researchers in the Physical Sciences
    preliminaries
    priors.ipynb
 
-by Francesca Capel (ODSL) , Johannes Buchner (PUC) 
+by Francesca Capel (ODSL) , Johannes Buchner (MPE) 
 
 Course web page: https://indico.ph.tum.de/event/6875/
 
