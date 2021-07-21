@@ -4,13 +4,13 @@ Install
 Each of the following three options should give you a jupyter notebook server.
 
 
-colab
---------------
+Option 1: Colab
+----------------
 
 use https://colab.research.google.com/
 
-with Docker
--------------
+Option 2: with Docker
+----------------------
 
 Use the following text file (called "Dockerfile") and follow its instructions:
 
@@ -83,8 +83,8 @@ Use the following text file (called "Dockerfile") and follow its instructions:
 
 
 
-on your own computer
----------------------
+Option 3: on your own computer
+-------------------------------
 
 NOTE: Tutors are not there to help with your computer problems. 
 Do not spend your or their time with broken software installations -- 
