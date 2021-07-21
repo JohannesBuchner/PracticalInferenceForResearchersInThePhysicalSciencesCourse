@@ -1,7 +1,11 @@
 Preliminaries
 ===============
 
-To obtain the Zoom link of the course, you need to run a jupyter notebook and pass a questionaire.
+To obtain the Zoom link to the course, you need to run a jupyter notebook and pass the questionaire below.
+
+
+Notebook
+---------------
 
 The jupyter notebook is here:
 
