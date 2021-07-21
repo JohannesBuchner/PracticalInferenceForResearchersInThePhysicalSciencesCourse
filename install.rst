@@ -39,6 +39,9 @@ Use the following text file (called "Dockerfile") and follow its instructions:
    #    -p 8888:8888 allows the container to use the web server port 8888 on your computer
    #    -v makes the current directory accessible as the work/ directory
    # 
+   # 5) Work with notebooks in the work folder, you can upload the downloaded 
+   #    colab notebook to there. You do not need to install anything anymore (remove first two cells).
+   #    
    # End of instructions.
 
 
