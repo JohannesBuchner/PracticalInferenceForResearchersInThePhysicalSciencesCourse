@@ -9,13 +9,13 @@ Notebook
 
 The jupyter notebook is here:
 
- * https://colab.research.google.com/drive/1LAhKEThrOpriq6M2Slc8_QLpaIEbO6la?usp=sharing
+* use this link https://mybinder.org/v2/gh/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/main
 
-   * Click File -> Save a copy ... to make your own copy.
+   * open 0Preliminaries.ipynb in the work/ folder
 
- * Alternative: If you want to work on your own computer or do not have a Google account:
+ * Alternative: If you want to work on your own computer:
  
-   * Download the notebook (.ipynb file)
+   * Download the notebook (.ipynb file) from the link above or the github repository
    * Install the necessary packages as explained in :doc:`install`
 
 
