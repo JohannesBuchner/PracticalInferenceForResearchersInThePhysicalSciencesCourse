@@ -3,7 +3,8 @@
 # 
 # 1) Install docker on your computer (https://docs.docker.com/engine/install/)
 # 
-# 2) Place this text file in a empty directory. Open a terminal and enter this directory.
+# 2) Place this text file (called "Dockerfile") in a empty directory. 
+#    Open a terminal and enter this directory.
 # 
 # 3) run: $ docker build --rm -t jupyter/my-datascience-notebook
 # 
@@ -20,6 +21,9 @@
 #    -p 8888:8888 allows the container to use the web server port 8888 on your computer
 #    -v makes the current directory accessible as the work/ directory
 #    jupyter lab ...: start jupyter lab server
+# 
+# 5) Work with notebooks in the work folder, you can upload the downloaded 
+#    colab notebook to there. You do not need to install anything anymore (remove first two cells).
 # 
 # End of instructions.
 

@@ -4,17 +4,18 @@ Install
 Each of the following three options should give you a jupyter notebook server.
 
 
-Option 1: Colab
+Option 1: Binder
 ----------------
 
-use https://colab.research.google.com/
+* use this link https://mybinder.org/v2/gh/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/main
+* the notebooks are in work/
 
 Option 2: with Docker
 ----------------------
 
 Use the following text file (called "Dockerfile") and follow its instructions:
 
-::
+.. literalinclude:: Dockerfile
 
    # Instructions
    # ----------------
