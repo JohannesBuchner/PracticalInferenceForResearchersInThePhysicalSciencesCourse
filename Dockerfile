@@ -61,5 +61,7 @@ RUN install_cmdstan
 #ENTRYPOINT ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root"]
 ENTRYPOINT []
 
+COPY *.ipynb work/
+
 # run from the home directory
 WORKDIR "${HOME}"
