@@ -40,7 +40,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.mathjax',
     'sphinx.ext.autosectionlabel',
-    'nbsphinx',
+    #'nbsphinx',
     'sphinx_rtd_theme',
     'sphinx.ext.napoleon',
     'edit_on_github',

@@ -6,7 +6,6 @@ Practical Inference for Researchers in the Physical Sciences
    :caption: Contents:
 
    preliminaries
-   priors.ipynb
 
 by Francesca Capel (ODSL) , Johannes Buchner (MPE) 
 
