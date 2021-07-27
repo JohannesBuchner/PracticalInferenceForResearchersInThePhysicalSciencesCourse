@@ -57,7 +57,7 @@ RUN pip install snowline==0.5.2 && \
 RUN install_cmdstan
 
 # run jupyter lab server when the docker container is run
-ENTRYPOINT ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root"]
+#ENTRYPOINT ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root"]
 
 # run from the home directory
 WORKDIR "${HOME}"
