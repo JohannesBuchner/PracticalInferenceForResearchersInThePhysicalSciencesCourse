@@ -12,13 +12,14 @@
 # 
 #    Its name (tag) is jupyter/my-datascience-notebook.
 # 
-# 4) run: $ docker run -p 8888:8888 -v "${PWD}":/home/jovyan/work jupyter/my-datascience-notebook
+# 4) run: $ docker run -p 8888:8888 -v "${PWD}":/home/jovyan/work jupyter/my-datascience-notebook jupyter lab --ip=0.0.0.0 --allow-root
 #    and open the stated URL http://127.0.0.1:8888/lab?token=.... in your browser
 #    
 #    This will run a JupyterLab server, where you can edit notebooks.
 # 
 #    -p 8888:8888 allows the container to use the web server port 8888 on your computer
 #    -v makes the current directory accessible as the work/ directory
+#    jupyter lab ...: start jupyter lab server
 # 
 # End of instructions.
 
@@ -58,6 +59,7 @@ RUN install_cmdstan
 
 # run jupyter lab server when the docker container is run
 #ENTRYPOINT ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root"]
+ENTRYPOINT []
 
 # run from the home directory
 WORKDIR "${HOME}"
