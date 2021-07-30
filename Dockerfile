@@ -66,6 +66,8 @@ RUN install_cmdstan
 ENTRYPOINT []
 
 COPY *.ipynb work/
+RUN mkdir -p $HOME/.jupyter/custom/ && \
+	wget -q https://raw.githubusercontent.com/jiahao/jupyter-stylesheet/4bcf7c232bc0df8af748537e83b7d9beeda7c048/custom.css -O $HOME/.jupyter/custom/custom.css || true
 
 # run from the home directory
 WORKDIR "${HOME}"
