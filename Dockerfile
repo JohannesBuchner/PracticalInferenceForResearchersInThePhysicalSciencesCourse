@@ -6,7 +6,7 @@
 # 2) Place this text file (called "Dockerfile") in a empty directory. 
 #    Open a terminal and enter this directory.
 # 
-# 3) run: $ docker build --rm -t jupyter/my-datascience-notebook
+# 3) run: $ docker build --rm -t jupyter/my-datascience-notebook .
 # 
 #    This will build a docker container (similar to a virtual machine)
 #    with all the python packages needed for the course.
@@ -69,6 +69,11 @@ COPY *.ipynb work/
 COPY img/ work/img/
 RUN mkdir -p $HOME/.jupyter/custom/ && \
 	wget -q https://raw.githubusercontent.com/jiahao/jupyter-stylesheet/4bcf7c232bc0df8af748537e83b7d9beeda7c048/custom.css -O $HOME/.jupyter/custom/custom.css || true
+
+USER root
+RUN chmod -R 777 work/
+RUN chown -R ${NB_UID}:${NB_GID} work/
+USER ${NB_UID}
 
 # run from the home directory
 WORKDIR "${HOME}"
