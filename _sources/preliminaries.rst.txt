@@ -97,7 +97,7 @@ To join the course, you need to fill out the following questionaire:
 			<label><input type="radio" name="q4" value="4">1.5518</label>
 			<label><input type="radio" name="q4" value="5">0.1732</label>
 		</div>
-		<h3>Levy flight</h3>
+		<h3>Random walk</h3>
 		Is the resulting distribution the same, narrower or wider than the proposal distribution?
 		<div>
 			<label><input type="radio" name="q5" value="1">narrower</label>

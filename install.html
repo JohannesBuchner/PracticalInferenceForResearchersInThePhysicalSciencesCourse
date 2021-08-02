@@ -178,7 +178,7 @@
 # 2) Place this text file (called &quot;Dockerfile&quot;) in a empty directory. 
 #    Open a terminal and enter this directory.
 # 
-# 3) run: $ docker build --rm -t jupyter/my-datascience-notebook
+# 3) run: $ docker build --rm -t jupyter/my-datascience-notebook .
 # 
 #    This will build a docker container (similar to a virtual machine)
 #    with all the python packages needed for the course.
@@ -224,7 +224,7 @@ USER ${NB_UID}
 
 # install the necessary packages for the course:
 # Nested Sampling and MCMC
-RUN conda install -y ultranest==3.2.0 pystan==2.19.1.1 cmdstanpy==0.9.76
+RUN conda install -y ultranest==3.3.0 pystan==2.19.1.1 cmdstanpy==0.9.76
 # install Importance Sampling package (snowline, pypmc)
 RUN pip install snowline==0.5.2 &amp;&amp; \
     fix-permissions &quot;${CONDA_DIR}&quot; &amp;&amp; \
@@ -238,6 +238,14 @@ RUN install_cmdstan
 ENTRYPOINT []
 
 COPY *.ipynb work/
+COPY img/ work/img/
+RUN mkdir -p $HOME/.jupyter/custom/ &amp;&amp; \
+	wget -q https://raw.githubusercontent.com/jiahao/jupyter-stylesheet/4bcf7c232bc0df8af748537e83b7d9beeda7c048/custom.css -O $HOME/.jupyter/custom/custom.css || true
+
+USER root
+RUN chmod -R 777 work/
+RUN chown -R ${NB_UID}:${NB_GID} work/
+USER ${NB_UID}
 
 # run from the home directory
 WORKDIR &quot;${HOME}&quot;
