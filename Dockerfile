@@ -52,7 +52,7 @@ USER ${NB_UID}
 
 # install the necessary packages for the course:
 # Nested Sampling and MCMC
-RUN conda install -y ultranest==3.2.0 pystan==2.19.1.1 cmdstanpy==0.9.76
+RUN conda install -y ultranest==3.3.0 pystan==2.19.1.1 cmdstanpy==0.9.76
 # install Importance Sampling package (snowline, pypmc)
 RUN pip install snowline==0.5.2 && \
     fix-permissions "${CONDA_DIR}" && \
