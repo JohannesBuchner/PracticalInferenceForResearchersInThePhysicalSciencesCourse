@@ -13,9 +13,12 @@ Option 1: Binder
 Option 2: with Docker
 ----------------------
 
+Download the notebooks from the Github repository: https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse
+
 Use the following text file (called "Dockerfile") and follow its instructions:
 
 .. literalinclude:: Dockerfile
+
 
 Option 3: on your own computer
 -------------------------------
@@ -35,3 +38,5 @@ You will need the following packages:
 Look at the Dockerfile above for how to install with conda.
 
 Look at the colab notebook for how to install with pip.
+
+Download the notebooks from the Github repository: https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse
