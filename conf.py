@@ -129,7 +129,7 @@ html_theme_options = {
     'style_nav_header_background': '#2980B9',
     #'only_logo': False,
 }
-html_logo = "static/logo.svg"
+html_logo = "static/logo.png"
 html_show_sourcelink = False
 html_favicon = "static/icon.ico"
 
