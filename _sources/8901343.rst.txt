@@ -1,6 +1,17 @@
 Preliminaries passed
 ======================
 
-Congratulations, you filled out the preliminaries questionaire correctly
+Congratulations, you filled out the preliminaries questionaire correctly.
 
-This page will be updated with the Zoom link.
+This page will be updated with the Zoom information::
+
+   .........
+   .........
+   .........
+
+
+In the meantime, you can start exploring the notebooks: 
+
+`Github repository <https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse>`_
+
+`Launch in binder <https://mybinder.org/v2/gh/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/main>`_

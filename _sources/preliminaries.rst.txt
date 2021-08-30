@@ -1,4 +1,4 @@
-Preliminaries
+Getting started
 ===============
 
 To obtain the Zoom link to the course, you need to run a jupyter notebook and pass the questionaire below.
@@ -11,6 +11,7 @@ The jupyter notebook is here:
 
 * use this link https://mybinder.org/v2/gh/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/main
 
+   * It takes a while to start up.
    * open 0Preliminaries.ipynb in the work/ folder
 
  * Alternative: If you want to work on your own computer:
