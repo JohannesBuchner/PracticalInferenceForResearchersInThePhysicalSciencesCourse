@@ -35,8 +35,6 @@ You will need the following packages:
 * cmdstanpy==0.9.76
 * snowline==0.5.2 (requires pypmc, see `this issue <https://github.com/pypmc/pypmc/issues/66>`_)
 
-Look at the Dockerfile above for how to install with conda.
-
-Look at the colab notebook for how to install with pip.
+Look at the Dockerfile above for how to install with conda (pip commands are similar).
 
 Download the notebooks from the Github repository: https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse

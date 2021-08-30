@@ -23,7 +23,7 @@
 #    jupyter lab ...: start jupyter lab server
 # 
 # 5) Work with notebooks in the work folder, you can upload the downloaded 
-#    colab notebook to there. You do not need to install anything anymore (remove first two cells).
+#    notebook to there. You do not need to install anything anymore (remove first two cells).
 # 
 # End of instructions.
 
