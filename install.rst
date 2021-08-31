@@ -35,6 +35,17 @@ You will need the following packages:
 * cmdstanpy==0.9.76
 * snowline==0.5.2 (requires pypmc, see `this issue <https://github.com/pypmc/pypmc/issues/66>`_)
 
-Look at the Dockerfile above for how to install with conda (pip commands are similar).
+Look at the Dockerfile above for how to install with conda (pip commands are similar)::
+
+	conda install ultranest==3.3.0 pystan==2.19.1.1 cmdstanpy==0.9.76 arviz==0.11.2 ipykernel
+	pip install snowline==0.5.2
+	install_cmdstan
 
 Download the notebooks from the Github repository: https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse
+
+In the folder with the notebooks, run the jupyter server::
+
+	jupyter notebook 
+
+If you have problems, search online first (stackoverflow, how jupyter notebooks work, etc).
+You can also open a Github issue https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/issues
