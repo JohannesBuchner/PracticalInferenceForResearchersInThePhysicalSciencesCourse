@@ -19,6 +19,7 @@ Use the following text file (called "Dockerfile") and follow its instructions:
 
 .. literalinclude:: Dockerfile
 
+How to run and install docker? Read the text file above!
 
 Option 3: on your own computer
 -------------------------------
