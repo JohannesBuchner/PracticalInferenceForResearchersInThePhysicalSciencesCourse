@@ -13,9 +13,12 @@ Important links:
 
 * Course web page: https://indico.ph.tum.de/event/6875/
 * First week: Monte Carlo inference methods
+
   * `Access from this page <https://johannesbuchner.github.io/PracticalInferenceForResearchersInThePhysicalSciencesCourse/>`_ (see Getting started and Install pages)
   * `Github repository <https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse>`_
+
 * Second week: Bayesian workflow course
+
   * `Content <https://francescacapel.com/BayesianWorkflow/>`_
   * `Github repository <https://github.com/cescalara/BayesianWorkflow>`_
 
