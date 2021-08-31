@@ -196,7 +196,7 @@
 #    jupyter lab ...: start jupyter lab server
 # 
 # 5) Work with notebooks in the work folder, you can upload the downloaded 
-#    colab notebook to there. You do not need to install anything anymore (remove first two cells).
+#    notebook to there. You do not need to install anything anymore (remove first two cells).
 # 
 # End of instructions.
 
@@ -252,6 +252,7 @@ USER ${NB_UID}
 WORKDIR &quot;${HOME}&quot;
 </pre></div>
 </div>
+<p>How to run and install docker? Read the text file above!</p>
 </div>
 <div class="section" id="option-3-on-your-own-computer">
 <h2>Option 3: on your own computer<a class="headerlink" href="#option-3-on-your-own-computer" title="Permalink to this headline">¶</a></h2>
@@ -266,9 +267,19 @@ use one of the other options instead.</p>
 <li><p>cmdstanpy==0.9.76</p></li>
 <li><p>snowline==0.5.2 (requires pypmc, see <a class="reference external" href="https://github.com/pypmc/pypmc/issues/66">this issue</a>)</p></li>
 </ul>
-<p>Look at the Dockerfile above for how to install with conda.</p>
-<p>Look at the colab notebook for how to install with pip.</p>
+<p>Look at the Dockerfile above for how to install with conda (pip commands are similar):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">ultranest</span><span class="o">==</span><span class="mf">3.3</span><span class="o">.</span><span class="mi">0</span> <span class="n">pystan</span><span class="o">==</span><span class="mf">2.19</span><span class="o">.</span><span class="mf">1.1</span> <span class="n">cmdstanpy</span><span class="o">==</span><span class="mf">0.9</span><span class="o">.</span><span class="mi">76</span> <span class="n">arviz</span><span class="o">==</span><span class="mf">0.11</span><span class="o">.</span><span class="mi">2</span> <span class="n">ipykernel</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">snowline</span><span class="o">==</span><span class="mf">0.5</span><span class="o">.</span><span class="mi">2</span>
+<span class="n">install_cmdstan</span>
+</pre></div>
+</div>
 <p>Download the notebooks from the Github repository: <a class="reference external" href="https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse">https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse</a></p>
+<p>In the folder with the notebooks, run the jupyter server:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">notebook</span>
+</pre></div>
+</div>
+<p>If you have problems, search online first (stackoverflow, how jupyter notebooks work, etc).
+You can also open a Github issue <a class="reference external" href="https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/issues">https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/issues</a></p>
 </div>
 </div>
 
