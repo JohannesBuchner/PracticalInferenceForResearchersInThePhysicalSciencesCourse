@@ -13,7 +13,7 @@ Each of the following three options should give you a jupyter notebook server.
 Option 1: on your own computer
 -------------------------------
 
-First of all download the notebooks from the [page](https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse.git) by either
+First of all download the notebooks from the `Github page <https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse>`_ by either
  - clicking `Code`, `Download ZIP`, or
  - cloning the GitHub repository with opening a terminal (`Git Bash` on Windows) and typing
  ```
