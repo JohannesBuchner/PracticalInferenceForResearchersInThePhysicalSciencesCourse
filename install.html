@@ -188,15 +188,15 @@ However, it won’t save the results of your computation unless downloaded. The 
 </ul>
 <p>To install these with conda:</p>
 <ul>
-<li><p>Download and install Anaconda or miniconda <a class="reference external" href="https://www.anaconda.com/products/individual">https://www.anaconda.com/products/individual</a></p></li>
-<li><p>Open a terminal (Anaconda prompt in Windows) and if conda is not active, do <cite>conda activate</cite>.</p></li>
-<li><p>Add conda-forge repository: <cite>conda config –add channels conda-forge</cite>. You can check with <cite>conda config –show channels</cite></p></li>
+<li><p>Download and install <a class="reference external" href="https://docs.anaconda.com/anaconda/install/index.html">Anaconda</a> or <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">miniconda</a></p></li>
+<li><p>Open a terminal (Anaconda prompt in Windows). If conda is not active yet, run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span></code>.</p></li>
+<li><p>Add conda-forge repository: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">config</span> <span class="pre">--add</span> <span class="pre">channels</span> <span class="pre">conda-forge</span></code>. You can check with <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">config</span> <span class="pre">--show</span> <span class="pre">channels</span></code></p></li>
 <li><p>Install the packages:</p>
-<ul class="simple">
-<li><p><cite>conda install -y cython ultranest==3.2.0 pystan==2.19.1.1 cmdstanpy==0.9.76 arviz==0.11.2 jupyter</cite></p></li>
-<li><p><cite>pip install snowline==0.5.2</cite></p></li>
-<li><p><cite>install_cmdstan</cite></p></li>
-</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">cython</span> <span class="n">ultranest</span><span class="o">==</span><span class="mf">3.2</span><span class="o">.</span><span class="mi">0</span> <span class="n">pystan</span><span class="o">==</span><span class="mf">2.19</span><span class="o">.</span><span class="mf">1.1</span> <span class="n">cmdstanpy</span><span class="o">==</span><span class="mf">0.9</span><span class="o">.</span><span class="mi">76</span> <span class="n">arviz</span><span class="o">==</span><span class="mf">0.11</span><span class="o">.</span><span class="mi">2</span> <span class="n">jupyter</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">snowline</span><span class="o">==</span><span class="mf">0.5</span><span class="o">.</span><span class="mi">2</span>
+<span class="n">install_cmdstan</span>
+</pre></div>
+</div>
 </li>
 <li><p>In the folder with the notebooks, run the jupyter server:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">notebook</span>
@@ -207,12 +207,11 @@ However, it won’t save the results of your computation unless downloaded. The 
 </ul>
 <p>The Dockerfile below gives an example of the installation process on Linux.</p>
 <p>If you have problems, search online first (stackoverflow, how jupyter notebooks work, etc).
-You can also open a Github issue <a class="reference external" href="https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/issues">https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/issues</a></p>
+You can also <a class="reference external" href="https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/issues">open a Github issue</a></p>
 </div>
 <div class="section" id="option-2-with-docker">
 <h2>Option 2: with Docker<a class="headerlink" href="#option-2-with-docker" title="Permalink to this headline">¶</a></h2>
-<p>Download the notebooks from the Github repository (see option 1):
-<a class="reference external" href="https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse">https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse</a></p>
+<p>Download the notebooks from the <a class="reference external" href="https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse">Github repository</a> (see option 1).</p>
 <ol class="arabic simple">
 <li><p>Install docker <a class="reference external" href="https://docs.docker.com/engine/install/">https://docs.docker.com/engine/install/</a></p></li>
 <li><p>Place the text file below (called “Dockerfile”) in a empty directory. (You can also download it from the github repository)</p></li>

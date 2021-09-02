@@ -30,14 +30,14 @@ You will need the following packages:
 
 To install these with conda:
 
-* Download and install Anaconda or miniconda https://www.anaconda.com/products/individual
-* Open a terminal (Anaconda prompt in Windows) and if conda is not active, do `conda activate`.
-* Add conda-forge repository: `conda config --add channels conda-forge`. You can check with `conda config --show channels`
-* Install the packages: 
+* Download and install `Anaconda <https://docs.anaconda.com/anaconda/install/index.html>`_ or `miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ 
+* Open a terminal (Anaconda prompt in Windows). If conda is not active yet, run ``conda activate``.
+* Add conda-forge repository: ``conda config --add channels conda-forge``. You can check with ``conda config --show channels``
+* Install the packages::
 
-  * `conda install -y cython ultranest==3.2.0 pystan==2.19.1.1 cmdstanpy==0.9.76 arviz==0.11.2 jupyter`
-  * `pip install snowline==0.5.2`
-  * `install_cmdstan`
+    conda install -y cython ultranest==3.2.0 pystan==2.19.1.1 cmdstanpy==0.9.76 arviz==0.11.2 jupyter
+    pip install snowline==0.5.2
+    install_cmdstan
 
 * In the folder with the notebooks, run the jupyter server::
 
@@ -48,13 +48,12 @@ To install these with conda:
 The Dockerfile below gives an example of the installation process on Linux.
 
 If you have problems, search online first (stackoverflow, how jupyter notebooks work, etc).
-You can also open a Github issue https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/issues
+You can also `open a Github issue <https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/issues>`_
 
 Option 2: with Docker
 ----------------------
 
-Download the notebooks from the Github repository (see option 1): 
-https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse
+Download the notebooks from the `Github repository <https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse>`_ (see option 1).
 
 1. Install docker https://docs.docker.com/engine/install/
 
