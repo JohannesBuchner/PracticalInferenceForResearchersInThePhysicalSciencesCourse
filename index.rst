@@ -6,6 +6,7 @@ Practical Inference for Researchers in the Physical Sciences
    :caption: Contents
 
    preliminaries
+   install
 
 Lecturers
 -------------
