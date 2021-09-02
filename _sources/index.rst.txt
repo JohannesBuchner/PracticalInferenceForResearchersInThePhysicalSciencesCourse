@@ -23,3 +23,10 @@ Important links:
   * `Github repository <https://github.com/cescalara/BayesianWorkflow>`_
 
 To get access to the course, go to :doc:`preliminaries`
+
+
+Contributors
+------------
+
+Johannes Diehl
+Benedikt Wach

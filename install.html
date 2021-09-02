@@ -159,18 +159,63 @@
             
   <div class="section" id="install">
 <h1>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h1>
+<p>NOTE: the installation step is expected to be done prior the beginning of the block course.</p>
+<p>Please try to proceed with the installation using Option 1 or 2 below.
+If failing that, the mybinder (Option 3) is available and does not require preparation.
+However, it won’t save the results of your computation unless downloaded. The running session is subject to idle timeout.</p>
 <p>Each of the following three options should give you a jupyter notebook server.</p>
-<div class="section" id="option-1-binder">
-<h2>Option 1: Binder<a class="headerlink" href="#option-1-binder" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>use this link <a class="reference external" href="https://mybinder.org/v2/gh/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/main">https://mybinder.org/v2/gh/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/main</a></p></li>
-<li><p>the notebooks are in work/</p></li>
+<div class="section" id="option-1-on-your-own-computer">
+<h2>Option 1: on your own computer<a class="headerlink" href="#option-1-on-your-own-computer" title="Permalink to this headline">¶</a></h2>
+<dl>
+<dt>First of all download the notebooks from the [page](<a class="reference external" href="https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse.git">https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse.git</a>) by either</dt><dd><ul class="simple">
+<li><p>clicking <cite>Code</cite>, <cite>Download ZIP</cite>, or</p></li>
+<li><p>cloning the GitHub repository with opening a terminal (<cite>Git Bash</cite> on Windows) and typing</p></li>
 </ul>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse.git</span> <span class="pre">WORKING_DIRECTORY</span>
+<span class="pre">`</span></code></p>
+</dd>
+</dl>
+<p>You will need the following packages:</p>
+<ul class="simple">
+<li><p>cython (install this first)</p></li>
+<li><p>ultranest==3.2.0</p></li>
+<li><p>pystan==2.19.1.1</p></li>
+<li><p>cmdstanpy==0.9.76</p></li>
+<li><p>snowline==0.5.2 (requires pypmc, see <a class="reference external" href="https://github.com/pypmc/pypmc/issues/66">this issue</a>)</p></li>
+<li><p>jupyter</p></li>
+</ul>
+<p>To install these with conda:</p>
+<ul>
+<li><p>Download and install Anaconda or miniconda <a class="reference external" href="https://www.anaconda.com/products/individual">https://www.anaconda.com/products/individual</a></p></li>
+<li><p>Open a terminal (Anaconda prompt in Windows) and if conda is not active, do <cite>conda activate</cite>.</p></li>
+<li><p>Add conda-forge repository: <cite>conda config –add channels conda-forge</cite>. You can check with <cite>conda config –show channels</cite></p></li>
+<li><p>Install the packages:</p>
+<ul class="simple">
+<li><p><cite>conda install -y cython ultranest==3.2.0 pystan==2.19.1.1 cmdstanpy==0.9.76 arviz==0.11.2 jupyter</cite></p></li>
+<li><p><cite>pip install snowline==0.5.2</cite></p></li>
+<li><p><cite>install_cmdstan</cite></p></li>
+</ul>
+</li>
+<li><p>In the folder with the notebooks, run the jupyter server:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">notebook</span>
+</pre></div>
+</div>
+</li>
+<li><p>Navigate to the working folder and the open the notebook.</p></li>
+</ul>
+<p>The Dockerfile below gives an example of the installation process on Linux.</p>
+<p>If you have problems, search online first (stackoverflow, how jupyter notebooks work, etc).
+You can also open a Github issue <a class="reference external" href="https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/issues">https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/issues</a></p>
 </div>
 <div class="section" id="option-2-with-docker">
 <h2>Option 2: with Docker<a class="headerlink" href="#option-2-with-docker" title="Permalink to this headline">¶</a></h2>
-<p>Download the notebooks from the Github repository: <a class="reference external" href="https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse">https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse</a></p>
-<p>Use the following text file (called “Dockerfile”) and follow its instructions:</p>
+<p>Download the notebooks from the Github repository (see option 1):
+<a class="reference external" href="https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse">https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse</a></p>
+<ol class="arabic simple">
+<li><p>Install docker <a class="reference external" href="https://docs.docker.com/engine/install/">https://docs.docker.com/engine/install/</a></p></li>
+<li><p>Place the text file below (called “Dockerfile”) in a empty directory. (You can also download it from the github repository)</p></li>
+</ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Instructions
 # ----------------
 # 
@@ -252,34 +297,47 @@ USER ${NB_UID}
 WORKDIR &quot;${HOME}&quot;
 </pre></div>
 </div>
-<p>How to run and install docker? Read the text file above!</p>
-</div>
-<div class="section" id="option-3-on-your-own-computer">
-<h2>Option 3: on your own computer<a class="headerlink" href="#option-3-on-your-own-computer" title="Permalink to this headline">¶</a></h2>
-<p>NOTE: Tutors are not there to help with your computer problems.
-Do not spend your or their time with broken software installations –
-use one of the other options instead.</p>
-<p>You will need the following packages:</p>
-<ul class="simple">
-<li><p>cython (install this first)</p></li>
-<li><p>ultranest==3.2.0</p></li>
-<li><p>pystan==2.19.1.1</p></li>
-<li><p>cmdstanpy==0.9.76</p></li>
-<li><p>snowline==0.5.2 (requires pypmc, see <a class="reference external" href="https://github.com/pypmc/pypmc/issues/66">this issue</a>)</p></li>
+<ol class="arabic simple" start="3">
+<li><p>Open a terminal and enter this directory.</p></li>
+<li><p>run: <cite>docker build –rm -t jupyter/my-datascience-notebook .</cite></p></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><p>This will build a docker container (similar to a virtual machine)
+with all the python packages needed for the course.</p></li>
+<li><p>Its name (tag) is jupyter/my-datascience-notebook.</p></li>
 </ul>
-<p>Look at the Dockerfile above for how to install with conda (pip commands are similar):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">ultranest</span><span class="o">==</span><span class="mf">3.3</span><span class="o">.</span><span class="mi">0</span> <span class="n">pystan</span><span class="o">==</span><span class="mf">2.19</span><span class="o">.</span><span class="mf">1.1</span> <span class="n">cmdstanpy</span><span class="o">==</span><span class="mf">0.9</span><span class="o">.</span><span class="mi">76</span> <span class="n">arviz</span><span class="o">==</span><span class="mf">0.11</span><span class="o">.</span><span class="mi">2</span> <span class="n">ipykernel</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">snowline</span><span class="o">==</span><span class="mf">0.5</span><span class="o">.</span><span class="mi">2</span>
-<span class="n">install_cmdstan</span>
-</pre></div>
+</div></blockquote>
+<ol class="arabic simple" start="5">
+<li><p>run: <cite>docker run -p 8888:8888 -v “${PWD}”:/home/jovyan/work jupyter/my-datascience-notebook jupyter lab –ip=0.0.0.0 –allow-root</cite></p></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><p>open the stated URL <a class="reference external" href="http://127.0.0.1:8888/lab?token=">http://127.0.0.1:8888/lab?token=</a>…. in your browser</p></li>
+<li><p>This will run a JupyterLab server, where you can edit notebooks. Here some explanation of the command above:</p>
+<ul>
+<li><p><cite>-p 8888:8888</cite> allows the container to use the web server port 8888 on your computer</p></li>
+<li><p><cite>-v</cite> makes the current directory accessible as the work/ directory</p></li>
+<li><p><cite>jupyter lab …</cite> starts the jupyter lab server</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="6">
+<li><p>Work with notebooks in the work folder, you can upload the downloaded
+notebook to there. You do not need to install anything anymore (remove first two cells).</p></li>
+</ol>
 </div>
-<p>Download the notebooks from the Github repository: <a class="reference external" href="https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse">https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse</a></p>
-<p>In the folder with the notebooks, run the jupyter server:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">notebook</span>
-</pre></div>
-</div>
-<p>If you have problems, search online first (stackoverflow, how jupyter notebooks work, etc).
-You can also open a Github issue <a class="reference external" href="https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/issues">https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/issues</a></p>
+<div class="section" id="option-3-binder">
+<h2>Option 3: Binder<a class="headerlink" href="#option-3-binder" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>use this link <a class="reference external" href="https://mybinder.org/v2/gh/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/main">https://mybinder.org/v2/gh/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/main</a></p></li>
+<li><p>It takes a bit to start.</p></li>
+<li><p>The notebooks are in work/</p></li>
+<li><p>Edit freely. All changes will be forgotten when you close the browser.</p></li>
+<li><p>Don’t forget to download the notebooks when you are done. You can also upload them again to resume later.</p></li>
+<li><p>Beware that notebooks can time out when inactive and have to be restarted.</p></li>
+</ul>
 </div>
 </div>
 

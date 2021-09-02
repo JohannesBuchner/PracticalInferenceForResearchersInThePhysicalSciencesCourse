@@ -1,32 +1,24 @@
 Install
 =============
 
+NOTE: the installation step is expected to be done prior the beginning of the block course.
+
+Please try to proceed with the installation using Option 1 or 2 below.
+If failing that, the mybinder (Option 3) is available and does not require preparation.
+However, it won't save the results of your computation unless downloaded. The running session is subject to idle timeout.
+
+
 Each of the following three options should give you a jupyter notebook server.
 
-
-Option 1: Binder
-----------------
-
-* use this link https://mybinder.org/v2/gh/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/main
-* the notebooks are in work/
-
-Option 2: with Docker
-----------------------
-
-Download the notebooks from the Github repository: https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse
-
-Use the following text file (called "Dockerfile") and follow its instructions:
-
-.. literalinclude:: Dockerfile
-
-How to run and install docker? Read the text file above!
-
-Option 3: on your own computer
+Option 1: on your own computer
 -------------------------------
 
-NOTE: Tutors are not there to help with your computer problems. 
-Do not spend your or their time with broken software installations -- 
-use one of the other options instead.
+First of all download the notebooks from the [page](https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse.git) by either
+ - clicking `Code`, `Download ZIP`, or
+ - cloning the GitHub repository with opening a terminal (`Git Bash` on Windows) and typing
+ ```
+ git clone https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse.git WORKING_DIRECTORY
+ ```
 
 You will need the following packages:
 
@@ -35,18 +27,69 @@ You will need the following packages:
 * pystan==2.19.1.1
 * cmdstanpy==0.9.76
 * snowline==0.5.2 (requires pypmc, see `this issue <https://github.com/pypmc/pypmc/issues/66>`_)
+* jupyter
 
-Look at the Dockerfile above for how to install with conda (pip commands are similar)::
+To install these with conda:
 
-	conda install ultranest==3.3.0 pystan==2.19.1.1 cmdstanpy==0.9.76 arviz==0.11.2 ipykernel
-	pip install snowline==0.5.2
-	install_cmdstan
+* Download and install Anaconda or miniconda https://www.anaconda.com/products/individual
+* Open a terminal (Anaconda prompt in Windows) and if conda is not active, do `conda activate`.
+* Add conda-forge repository: `conda config --add channels conda-forge`. You can check with `conda config --show channels`
+* Install the packages: 
 
-Download the notebooks from the Github repository: https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse
+  * `conda install -y cython ultranest==3.2.0 pystan==2.19.1.1 cmdstanpy==0.9.76 arviz==0.11.2 jupyter`
+  * `pip install snowline==0.5.2`
+  * `install_cmdstan`
 
-In the folder with the notebooks, run the jupyter server::
+* In the folder with the notebooks, run the jupyter server::
 
 	jupyter notebook 
 
+* Navigate to the working folder and the open the notebook.
+
+The Dockerfile below gives an example of the installation process on Linux.
+
 If you have problems, search online first (stackoverflow, how jupyter notebooks work, etc).
 You can also open a Github issue https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/issues
+
+Option 2: with Docker
+----------------------
+
+Download the notebooks from the Github repository (see option 1): 
+https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse
+
+1. Install docker https://docs.docker.com/engine/install/
+
+2. Place the text file below (called "Dockerfile") in a empty directory. (You can also download it from the github repository)
+
+.. literalinclude:: Dockerfile
+
+3. Open a terminal and enter this directory.
+
+4. run: `docker build --rm -t jupyter/my-datascience-notebook .`
+
+  * This will build a docker container (similar to a virtual machine)
+    with all the python packages needed for the course.
+  
+  * Its name (tag) is jupyter/my-datascience-notebook.
+
+5. run: `docker run -p 8888:8888 -v "${PWD}":/home/jovyan/work jupyter/my-datascience-notebook jupyter lab --ip=0.0.0.0 --allow-root`
+  
+  * open the stated URL http://127.0.0.1:8888/lab?token=.... in your browser
+  * This will run a JupyterLab server, where you can edit notebooks. Here some explanation of the command above:
+
+    * `-p 8888:8888` allows the container to use the web server port 8888 on your computer
+    * `-v` makes the current directory accessible as the work/ directory
+    * `jupyter lab ...` starts the jupyter lab server
+
+6. Work with notebooks in the work folder, you can upload the downloaded 
+   notebook to there. You do not need to install anything anymore (remove first two cells).
+
+Option 3: Binder
+----------------
+
+* use this link https://mybinder.org/v2/gh/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/main
+* It takes a bit to start.
+* The notebooks are in work/
+* Edit freely. All changes will be forgotten when you close the browser. 
+* Don't forget to download the notebooks when you are done. You can also upload them again to resume later.
+* Beware that notebooks can time out when inactive and have to be restarted. 
