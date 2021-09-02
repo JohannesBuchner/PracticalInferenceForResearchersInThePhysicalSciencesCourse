@@ -1,16 +1,14 @@
 Practical Inference for Researchers in the Physical Sciences
 =============================================================
 
+by Francesca Capel (ODSL), Johannes Buchner (MPE) 
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents
 
    preliminaries
    install
-
-Lecturers
--------------
-by Francesca Capel (ODSL), Johannes Buchner (MPE) 
 
 Important links
 ----------------
