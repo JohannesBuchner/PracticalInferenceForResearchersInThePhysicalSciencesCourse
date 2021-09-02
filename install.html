@@ -212,11 +212,15 @@ You can also <a class="reference external" href="https://github.com/JohannesBuch
 <div class="section" id="option-2-with-docker">
 <h2>Option 2: with Docker<a class="headerlink" href="#option-2-with-docker" title="Permalink to this headline">¶</a></h2>
 <p>Download the notebooks from the <a class="reference external" href="https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse">Github repository</a> (see option 1).</p>
-<ol class="arabic simple">
+<ol class="arabic">
 <li><p>Install docker <a class="reference external" href="https://docs.docker.com/engine/install/">https://docs.docker.com/engine/install/</a></p></li>
 <li><p>Download and place <cite>this text file (called “Dockerfile”) &lt;https://raw.githubusercontent.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/main/Dockerfile&gt;</cite> in a empty directory. (You can also download it from the github repository)</p></li>
 <li><p>Open a terminal and enter this directory.</p></li>
-<li><p>run <a href="#id1"><span class="problematic" id="id2">``</span></a>docker build –rm -t jupyter/my-datascience-notebook . ``</p></li>
+<li><p>run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">build</span> <span class="o">--</span><span class="n">rm</span> <span class="o">-</span><span class="n">t</span> <span class="n">jupyter</span><span class="o">/</span><span class="n">my</span><span class="o">-</span><span class="n">datascience</span><span class="o">-</span><span class="n">notebook</span> <span class="o">.</span>
+</pre></div>
+</div>
+</li>
 </ol>
 <blockquote>
 <div><ul class="simple">
@@ -225,8 +229,12 @@ with all the python packages needed for the course.</p></li>
 <li><p>Its name (tag) is jupyter/my-datascience-notebook.</p></li>
 </ul>
 </div></blockquote>
-<ol class="arabic simple" start="5">
-<li><p>run: <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-p</span> <span class="pre">8888:8888</span> <span class="pre">-v</span> <span class="pre">&quot;${PWD}&quot;:/home/jovyan/work</span> <span class="pre">jupyter/my-datascience-notebook</span> <span class="pre">jupyter</span> <span class="pre">lab</span> <span class="pre">--ip=0.0.0.0</span> <span class="pre">--allow-root</span></code></p></li>
+<ol class="arabic" start="5">
+<li><p>run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">p</span> <span class="mi">8888</span><span class="p">:</span><span class="mi">8888</span> <span class="o">-</span><span class="n">v</span> <span class="s2">&quot;$</span><span class="si">{PWD}</span><span class="s2">&quot;</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">jovyan</span><span class="o">/</span><span class="n">work</span> <span class="n">jupyter</span><span class="o">/</span><span class="n">my</span><span class="o">-</span><span class="n">datascience</span><span class="o">-</span><span class="n">notebook</span> <span class="n">jupyter</span> <span class="n">lab</span> <span class="o">--</span><span class="n">ip</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="o">--</span><span class="n">allow</span><span class="o">-</span><span class="n">root</span>
+</pre></div>
+</div>
+</li>
 </ol>
 <blockquote>
 <div><ul class="simple">

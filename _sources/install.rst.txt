@@ -61,14 +61,18 @@ Download the notebooks from the `Github repository <https://github.com/JohannesB
 
 3. Open a terminal and enter this directory.
 
-4. run ``docker build --rm -t jupyter/my-datascience-notebook . ``
+4. run::
+
+	docker build --rm -t jupyter/my-datascience-notebook .
 
   * This will build a docker container (similar to a virtual machine)
     with all the python packages needed for the course.
   
   * Its name (tag) is jupyter/my-datascience-notebook.
 
-5. run: ``docker run -p 8888:8888 -v "${PWD}":/home/jovyan/work jupyter/my-datascience-notebook jupyter lab --ip=0.0.0.0 --allow-root``
+5. run:: 
+
+	docker run -p 8888:8888 -v "${PWD}":/home/jovyan/work jupyter/my-datascience-notebook jupyter lab --ip=0.0.0.0 --allow-root
   
   * open the stated URL http://127.0.0.1:8888/lab?token=.... in your browser
   * This will run a JupyterLab server, where you can edit notebooks. Here some explanation of the command above:
