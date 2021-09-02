@@ -4,11 +4,14 @@ Install
 NOTE: the installation step is expected to be done prior the beginning of the block course.
 
 Please try to proceed with the installation using Option 1 or 2 below.
-If failing that, the mybinder (Option 3) is available and does not require preparation.
+If failing that, the binder (Option 3) is available and does not require installation.
+
 However, it won't save the results of your computation unless downloaded. The running session is subject to idle timeout.
 
-
 Each of the following three options should give you a jupyter notebook server.
+
+Once the installation is completed, proceed to :doc:`preliminaries`
+
 
 Option 1: on your own computer
 -------------------------------
@@ -93,3 +96,9 @@ Option 3: Binder
 * Edit freely. All changes will be forgotten when you close the browser. 
 * Don't forget to download the notebooks when you are done. You can also upload them again to resume later.
 * Beware that notebooks can time out when inactive and have to be restarted. 
+
+After installation
+------------------
+
+Once the installation is completed, proceed to :doc:`preliminaries`,
+to get access to the Zoom information.
