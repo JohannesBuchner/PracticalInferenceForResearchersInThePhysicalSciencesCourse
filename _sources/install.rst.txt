@@ -16,7 +16,7 @@ Option 1: on your own computer
 First of all download the notebooks from the `Github page <https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse>`_ by either
  - clicking `Code`, `Download ZIP`, or
  - cloning the GitHub repository with opening a terminal (`Git Bash` on Windows) and typing 
-   ```git clone https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse.git MY_WORKING_DIRECTORY```
+   ``git clone https://github.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse.git MY_WORKING_DIRECTORY``
 
 You will need the following packages:
 
