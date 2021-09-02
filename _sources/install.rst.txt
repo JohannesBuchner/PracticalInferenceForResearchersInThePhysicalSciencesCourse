@@ -43,7 +43,7 @@ To install these with conda:
 
 	jupyter notebook 
 
-* Navigate to the working folder and the open the notebook.
+* Navigate to the working folder and the open the notebook you want to work on.
 
 The Dockerfile below gives an example of the installation process on Linux.
 
@@ -57,20 +57,18 @@ Download the notebooks from the `Github repository <https://github.com/JohannesB
 
 1. Install docker https://docs.docker.com/engine/install/
 
-2. Place the text file below (called "Dockerfile") in a empty directory. (You can also download it from the github repository)
-
-.. literalinclude:: Dockerfile
+2. Download and place `this text file (called "Dockerfile") <https://raw.githubusercontent.com/JohannesBuchner/PracticalInferenceForResearchersInThePhysicalSciencesCourse/main/Dockerfile>` in a empty directory. (You can also download it from the github repository)
 
 3. Open a terminal and enter this directory.
 
-4. run: `docker build --rm -t jupyter/my-datascience-notebook .`
+4. run ``docker build --rm -t jupyter/my-datascience-notebook . ``
 
   * This will build a docker container (similar to a virtual machine)
     with all the python packages needed for the course.
   
   * Its name (tag) is jupyter/my-datascience-notebook.
 
-5. run: `docker run -p 8888:8888 -v "${PWD}":/home/jovyan/work jupyter/my-datascience-notebook jupyter lab --ip=0.0.0.0 --allow-root`
+5. run: ``docker run -p 8888:8888 -v "${PWD}":/home/jovyan/work jupyter/my-datascience-notebook jupyter lab --ip=0.0.0.0 --allow-root``
   
   * open the stated URL http://127.0.0.1:8888/lab?token=.... in your browser
   * This will run a JupyterLab server, where you can edit notebooks. Here some explanation of the command above:
