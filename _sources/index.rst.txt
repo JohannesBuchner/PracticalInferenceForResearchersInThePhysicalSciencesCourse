@@ -3,13 +3,16 @@ Practical Inference for Researchers in the Physical Sciences
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Contents
 
    preliminaries
 
+Lecturers
+-------------
 by Francesca Capel (ODSL), Johannes Buchner (MPE) 
 
-Important links:
+Important links
+----------------
 
 * Course web page: https://indico.ph.tum.de/event/6875/
 * First week: Monte Carlo inference methods
@@ -28,5 +31,6 @@ To get access to the course, go to :doc:`preliminaries`
 Contributors
 ------------
 
-Johannes Diehl
-Benedikt Wach
+* Johannes Diehl
+* Benedikt Wach
+* Mikhail Mikhasenko
