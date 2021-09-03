@@ -6,6 +6,7 @@ Congratulations, you filled out the preliminaries questionaire correctly.
 Below you find the Zoom information (maybe you want to bookmark this page?).
 
 Zoom link: https://zoom.us/j/93268412807?pwd=K25hWit2Wkp2aElPelA2dXcveG9WUT09
+Details::
 
 	Join Zoom Meeting
 	https://zoom.us/j/93268412807?pwd=K25hWit2Wkp2aElPelA2dXcveG9WUT09
