@@ -3,12 +3,30 @@ Preliminaries passed
 
 Congratulations, you filled out the preliminaries questionaire correctly.
 
-This page will be updated with the Zoom information (maybe you want to bookmark this page?)::
+Below you find the Zoom information (maybe you want to bookmark this page?).
 
-   .........
-   .........
-   .........
+Zoom link: https://zoom.us/j/93268412807?pwd=K25hWit2Wkp2aElPelA2dXcveG9WUT09
 
+	Join Zoom Meeting
+	https://zoom.us/j/93268412807?pwd=K25hWit2Wkp2aElPelA2dXcveG9WUT09
+
+	Meeting ID: 932 6841 2807
+	Passcode: 357226
+	One tap mobile
+	+14086380968,,93268412807#,,,,*357226# US (San Jose)
+	+16468769923,,93268412807#,,,,*357226# US (New York)
+
+	Dial by your location
+			+1 408 638 0968 US (San Jose)
+			+1 646 876 9923 US (New York)
+			+1 669 900 6833 US (San Jose)
+			+1 253 215 8782 US (Tacoma)
+			+1 301 715 8592 US (Washington DC)
+			+1 312 626 6799 US (Chicago)
+			+1 346 248 7799 US (Houston)
+	Meeting ID: 932 6841 2807
+	Passcode: 357226
+	Find your local number: https://zoom.us/u/abMMEyPWAo
 
 In the meantime, you can start exploring the notebooks: 
 
