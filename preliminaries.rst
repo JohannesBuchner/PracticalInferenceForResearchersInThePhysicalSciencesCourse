@@ -64,7 +64,7 @@ To join the course, you need to fill out the following questionaire:
 	  }
 	  
 	  
-	  document.getElementById("result").innerHTML = "<a href='" + total + ".html'>If correct, this will lead to the Zoom link</a>";
+	  document.getElementById("result").innerHTML = "<a href='" + total + ".html'>If correct, this link will lead to the Zoom information</a>";
 	  return false;
 	};
 	</script>
