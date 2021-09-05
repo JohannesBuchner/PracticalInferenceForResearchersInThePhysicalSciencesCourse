@@ -1,0 +1,111 @@
+
+Welcome
+
+Introduce tutors and lecturers
+
+
+
+
+structure of the course
+
+certificate
+
+hand in report as PDF
+
+everyone welcome to submit
+
+
+Breakout rooms automatically
+
+Names in Zoom
+
+
+
+--------------------------
+
+Illustrations
+
+Advanced Monte Carlo Methods
+
+- Initialisation
+
+- Termination
+
+- Efficient running in complex situations: PMDIT
+
+- Diagnostics
+
+- Parallelisation
+
+
+Advanced Importance Sampling
+
+- Expectation maximization (wikipedia): optimizes likelihood ratio
+- Variational Bayes: minimizes information loss
+
+  - look back at KL formula
+
+
+
+Advanced MCMC
+
+- Initialisation
+
+- Termination
+
+- Parallelisation
+
+  - Floating points
+  - Computing clusters: communication, overhead
+
+- emcee
+
+  - Goodman & Weare: method https://msp.org/camcos/2010/5-1/camcos-v5-n1-p04-s.pdf
+  - Differential Evolution algorithms
+  - Ensemble update
+  - high-d paper
+
+- zeus
+
+  - ESS paper: https://arxiv.org/pdf/2002.06212.pdf
+  - Slice sampling: http://people.ee.duke.edu/~lcarin/slice.pdf
+  - Random directions, know length
+  - Update samples
+  - What kind of updates are good? Detailed balance
+
+- NUTS paper
+  - https://arxiv.org/pdf/1111.4246.pdf
+
+
+
+Advanced Nested sampling
+
+  - LRPS
+
+    - dynesty paper https://arxiv.org/abs/1904.02180
+    - Ellipses paper https://arxiv.org/abs/astro-ph/0508461
+    - HMC https://arxiv.org/abs/1005.0157
+    - GMC https://www.mdpi.com/2504-3900/33/1/19/pdf
+	- smooth borders? http://djafari.free.fr/MaxEnt2014/papers/87_paper.pdf
+
+  - diagnostics
+
+    - insertion order test: no good viz
+    - visualisations: NESTCHECK https://arxiv.org/abs/1804.06406
+
+  - termination criteria
+
+  - Parallelisation of Monte Carlo methods
+  
+    - low-efficiency farming out
+    - replace multiple points
+    - 
+
+  - 
+
+
+
+
+
+
+
