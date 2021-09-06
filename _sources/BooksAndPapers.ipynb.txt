@@ -44,7 +44,7 @@
     "* Astrostatistics & Machine Learning course https://github.com/dirac-institute/uw-astr598-w18\n",
     "\n",
     "\n",
-    "# Papers for Advanced Methods\n",
+    "## Research Papers on State-of-the-Art Methods\n",
     "\n",
     "In the course, we will go through some of these (you do not have to read them beforehand).\n",
     "\n",

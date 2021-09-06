@@ -99,7 +99,6 @@
 <li class="toctree-l1"><a class="reference internal" href="preliminaries.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="BooksAndPapers.html">Reading material</a></li>
-<li class="toctree-l1"><a class="reference internal" href="BooksAndPapers.html#Papers-for-Advanced-Methods">Papers for Advanced Methods</a></li>
 </ul>
 
             
@@ -585,7 +584,7 @@ div.rendered_html tbody tr:hover {
 <h2>Effective number of samples<a class="headerlink" href="#Effective-number-of-samples" title="Permalink to this headline">¶</a></h2>
 <p>Since most samples have zero weight, they do not contribute effectively to the integral.</p>
 <p>We can compute the effective number of samples <a class="reference external" href="https://arxiv.org/pdf/0907.1254.pdf">can be defined as</a>:</p>
-<p><span class="math notranslate nohighlight">\(ESS = \frac{N}{1 + C^2}\)</span> with <span class="math notranslate nohighlight">\(C=\frac{1}{N}\sum_i\left(N \times \frac{w_i}{\sum_i w_i} - 1\right)^2\)</span></p>
+<p><span class="math notranslate nohighlight">\(ESS = \frac{N}{1 + C^2}\)</span> with <span class="math notranslate nohighlight">\(C^2=\frac{1}{N}\sum_i\left(N \times \frac{w_i}{\sum_i w_i} - 1\right)^2\)</span></p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>

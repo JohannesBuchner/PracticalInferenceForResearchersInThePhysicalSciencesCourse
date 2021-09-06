@@ -99,7 +99,6 @@
 <li class="toctree-l1"><a class="reference internal" href="preliminaries.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="BooksAndPapers.html">Reading material</a></li>
-<li class="toctree-l1"><a class="reference internal" href="BooksAndPapers.html#Papers-for-Advanced-Methods">Papers for Advanced Methods</a></li>
 </ul>
 
             
@@ -764,8 +763,7 @@ array([-9.9875, -9.7375, -9.4875, -9.2375, -8.9875, -8.7375, -8.4875,
 <p>For one data point <span class="math notranslate nohighlight">\(d_i=(P_i, L_i,\sigma_i)\)</span> given <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>, our Gaussian likelihood is therefore</p>
 <p><span class="math notranslate nohighlight">\(P(d_i|\alpha) = \mathrm{GaussianPDF}(L_i | L(P_i|\alpha,\beta), \sigma_i)\)</span></p>
 <p>or spelling it out:</p>
-<p><span class="math notranslate nohighlight">\(P(d_i|\alpha) = (2 \pi \sigma_i^2)^{-\frac{1}{2}} \exp\left(-\left(\frac{L_i - L(P_i|\alpha,\beta)}{\sigma_i}\right)^2/2\right)\)</span></p>
-<p><span class="math notranslate nohighlight">\(P(d_i|\alpha) = (2 \pi \sigma_i^2)^{-\frac{1}{2}} \exp\left(\frac{L_i - L(P_i|\alpha,\beta)}{\sigma_i})^2)\right)^{-\frac{1}{2}}\)</span></p>
+<p><span class="math notranslate nohighlight">\(P(d_i|\alpha) = (2 \pi \sigma_i^2)^{-\frac{1}{2}} \exp\left(-\frac{1}{2}\left(\frac{L_i - L(P_i|\alpha,\beta)}{\sigma_i}\right)^2\right)\)</span></p>
 <p>Since we want to analyse all data points and require this model to hold for all (logical AND), we multiply the probabilities and obtain our likelihood function:</p>
 <p><span class="math notranslate nohighlight">\(P(D|\alpha) = \prod_i P(d_i|\alpha)\)</span></p>
 <p>If we drop some constant factors and work in logarithms, we can write:</p>
