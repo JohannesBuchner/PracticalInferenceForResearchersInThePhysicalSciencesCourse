@@ -1,0 +1,1363 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Hamiltonian Monte Carlo &mdash; MCI-course 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+  
+  
+    <link rel="canonical" href="https://johannesbuchner.github.io/UltraNest/5-hamiltonian_mc.html"/>
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> MCI-course
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="preliminaries.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BooksAndPapers.html">Reading material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BooksAndPapers.html#Papers-for-Advanced-Methods">Papers for Advanced Methods</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MCI-course</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Hamiltonian Monte Carlo</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="Hamiltonian-Monte-Carlo">
+<h1>Hamiltonian Monte Carlo<a class="headerlink" href="#Hamiltonian-Monte-Carlo" title="Permalink to this headline">¶</a></h1>
+<p>The MCMC samplers that we have discussed so far can be thought of as a guided random walk towards regions of high posterior density. This random walk behaviour is inherently <strong>inefficient</strong>. Model reparametrisation and other tricks can help to improve the situation, but the inefficiency remains, <strong>especially in high-dimensional problems</strong>.</p>
+<p><strong>Hamiltonian Monte Carlo (HMC)</strong> is a dramatically more efficient way to draw samples from the target posterior distribution, thanks to its departure from the random walk approach. Instead, HMC uses concepts from Hamiltonian mechanics to direct the Markov transitions and avoid diffusive behaviour.</p>
+<p>An excellent introduction to HMC that is suitable for researchers in the physical sciences can be found in <a class="reference external" href="https://arxiv.org/pdf/1701.02434.pdf">this paper</a> by Michael Betancourt. Here, I will try to summarise the main concepts, borrowing notation, figures and explanations from this work.</p>
+<div class="section" id="Computing-expectations-with-MCMC">
+<h2>Computing expectations with MCMC<a class="headerlink" href="#Computing-expectations-with-MCMC" title="Permalink to this headline">¶</a></h2>
+<p>The goal in the implementation of any MCMC algorithm is the computation of expectation values. Consider a target sample space <span class="math notranslate nohighlight">\(Q\)</span>, of which any point <span class="math notranslate nohighlight">\(q \in Q\)</span> can be parametrised by real numbers, in <span class="math notranslate nohighlight">\(D\)</span> dimensions. In this parameter space, let our target distribution be a smooth density function, <span class="math notranslate nohighlight">\(\pi(q)\)</span>.</p>
+<p>Computing expectation values over this distribution is done by integrating over the parameter space</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{E}_\pi[f] = \int_Q \mathrm{d}q~\pi(q)f(q).\]</div>
+<p>In practice, we approximate these integrals through the Markov chains returned by our samplers.</p>
+<p>Given that we want to compute expectations, an obvious way for our sampler to be inefficient is to <strong>waste time evaluating :math:`pi(q)` in regions of parameter space that have negligible contribution to the expectation.</strong></p>
+<p>So we should just focus on regions with large density, <span class="math notranslate nohighlight">\(\pi(q)\)</span>, right? <em>Not exactly</em>. The expectation is an <em>integral</em> of this density of the <em>volume</em>, <span class="math notranslate nohighlight">\(\mathrm{d}q\)</span>. While the density will be largest at the mode, there is relatively little volume here, especially in high dimensions. Recall the curse of dimensionality as illustrated in the figure below. The relative weight of a partition containing a point of interest decreases from <span class="math notranslate nohighlight">\(1/3\)</span> to <span class="math notranslate nohighlight">\(1/9\)</span> and <span class="math notranslate nohighlight">\(1/27\)</span> as we
+scale from 1 to 3 dimensions.</p>
+<p><img alt="The curse of dimensionality" class="no-scaled-link" src="_images/hmc1.png" style="width: 800px;" /></p>
+<p>Actually, volume will be largest in the tails of the distribution, away from the mode. If we have <span class="math notranslate nohighlight">\(\pi(q)\)</span> largest at the mode, and <span class="math notranslate nohighlight">\(\mathrm{d}q\)</span> largest in the tails, the region of interest is somewhere between the two. Let’s refer to this region as the <strong>typical set</strong>.</p>
+<p><img alt="The typical set" class="no-scaled-link" src="_images/hmc2.png" style="width: 500px;" /></p>
+<p>So we have understood that we want to focus all our computational resources on exploring this typical set. As we discussed above, standard MCMC algorithms, such as the Metropolis-Hastings algorithm, will eventually explore the typical set, as long as the Markov transition <em>preserves</em> the target distribution.</p>
+<p>Given sufficient time, samples from the Markov chain can be used to approximate our desired expectations:</p>
+<div class="math notranslate nohighlight">
+\[\hat{f}_N = \frac{1}{N} \sum_{n=0}^N f(q_n),\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[\lim_{N\to\infty} \hat{f}_N = \mathbb{E}_\pi[f].\]</div>
+</div>
+<div class="section" id="The-basics-of-HMC">
+<h2>The basics of HMC<a class="headerlink" href="#The-basics-of-HMC" title="Permalink to this headline">¶</a></h2>
+<p>So how can we explore the typical set more efficiently than with just randomly walking? We can exploit information about the <em>geometry</em> of the typical set, and use this to move through it. Imagine that we knew the <em>vector field</em> of the typical set, we could just follow it, like a ball rolling along a slope.</p>
+<p>Great! But how can we find this vector field using only information about our target density? The <em>gradient</em> of the density will give us a vector field that points towards the mode, but we want to move around the mode in the typical set. We can imagine this as a physical system, like a satellite (our trajectory) in orbit around the Earth (the mode):</p>
+<p><img alt="Exploring the typical set" class="no-scaled-link" src="_images/hmc3.png" style="width: 900px;" /></p>
+<p>We too can avoid “crashing into the mode” by giving our “satellite” enough momentum. But we don’t want to add too much or too little momentum either. Let’s start by expanding our parameter space by introducing auxiliary momentum parameters, <span class="math notranslate nohighlight">\(p\)</span></p>
+<div class="math notranslate nohighlight">
+\[q \rightarrow (q, p).\]</div>
+<p>In doing this, our target distribution is now a joint probability distrbution over <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(q\)</span>. We can express this as</p>
+<div class="math notranslate nohighlight">
+\[\pi(q, p) = \pi(p|q)\pi(q).\]</div>
+<p>This choice ensure that if we marginalise out the momentum, we immediately recover what we started with. Any trajectory in this new joint space can therefore be projected down into our original parameter space.</p>
+<p>Continuing the analogy with classical mechanics, we can now use Hamiltonian dynamics to construct trajectories in the joint space. The Hamiltonian energy of the system</p>
+<div class="math notranslate nohighlight">
+\[H(q, p) \equiv -\log\pi(q, p),\]</div>
+<p>is composed of two terms</p>
+<div class="math notranslate nohighlight">
+\[H(q, p) = - \log\pi(p|q) - \log\pi(q) \equiv K(p, q) + V(q),\]</div>
+<p>with <span class="math notranslate nohighlight">\(K(p, q)\)</span> and <span class="math notranslate nohighlight">\(V(q)\)</span> the kinetic and potential energies, respectively. The potential energy is set by the target distribution, whereas the kinetic energy is to be determined.</p>
+<p>The Hamiltonian contains the geometry of the typical set, and so we can use it to find a vector field aligned with the typical set via <strong>Hamilton’s equations</strong>,</p>
+<div class="math notranslate nohighlight">
+\[\frac{\mathrm{d}q}{\mathrm{d}t} = \frac{\partial H}{\partial p} = \frac{\partial K}{\partial p}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{\mathrm{d}p}{\mathrm{d}t} = - \frac{\partial H}{\partial q} = - \frac{\partial K}{\partial q} - \frac{\partial V}{\partial q}.\]</div>
+<p>Here we recognise <span class="math notranslate nohighlight">\(\partial V / \partial q\)</span> as simply the gradient of our target distribution, satisfying our above physical intuition.</p>
+<blockquote>
+<div><p>Evolving Hamilton’s equations for some time generates trajectories in the joint space that efficiently move around the typical set. Projecting these trajectories back into our parameter space via marginalisation gives what we set out to find!</p>
+</div></blockquote>
+<p>The Hamiltonian Markov transition * Lift a point into the joint space from the parameter space by sampling from the conditional distribution</p>
+<div class="math notranslate nohighlight">
+\[p \sim \pi(p | q).\]</div>
+<p>* Integrate Hamilton’s equations for some time, <span class="math notranslate nohighlight">\(t\)</span>, to move around the typical set</p>
+<div class="math notranslate nohighlight">
+\[(q, p) \rightarrow \phi_t(q, p).\]</div>
+<p>* Project back down into parameter space via marginalisation</p>
+<div class="math notranslate nohighlight">
+\[(q, p) \rightarrow q.\]</div>
+</div>
+<div class="section" id="Tuning">
+<h2>Tuning<a class="headerlink" href="#Tuning" title="Permalink to this headline">¶</a></h2>
+<p>In our above explanation, we left two quantities to be determined: * The <strong>kinetic energy</strong> <span class="math notranslate nohighlight">\(\sim \pi(p|q)\)</span>. * The <strong>integration time</strong>, <span class="math notranslate nohighlight">\(t\)</span>.</p>
+<p>These degrees of freedom need to be tuned to suit our particular problem.</p>
+<p>Optimising the kinetic energy</p>
+<p>Each time we sample a new momentum, we enter a different <em>energy level</em> of the system. For efficient exploration, we want to explore different energy levels in a uniform way, and for our momentum sampling to imply energy sampling that is close to that of the marginal energy distribution of the system. I.e.</p>
+<div class="math notranslate nohighlight">
+\[\pi(p|q) \Rightarrow \pi(E|q),\]</div>
+<p>and we want</p>
+<div class="math notranslate nohighlight">
+\[\pi(E|q) \sim \pi(E).\]</div>
+<p>As there are an infinite number of possible kinietic energies, it makes sense to restrict our search. A standard choice are <em>Euclidean-Gaussian</em> kinetic energies, such that</p>
+<div class="math notranslate nohighlight">
+\[\pi(p|q) = \mathcal{N}(p | 0, M),\]</div>
+<p>where <span class="math notranslate nohighlight">\(M\)</span> is typically referred to as the <em>mass matrix</em>. Because of the dual behaviour between the momentum and parameters, it turns out we can define an optimal choice for <span class="math notranslate nohighlight">\(M\)</span> by setting its inverse equal to the <em>target covariances</em>. In practice, this is estimated during the warmup phase of an HMC algorithm implementation.</p>
+<p>Optimising the integration time</p>
+<p>If we integrate for short times, we won’t explore so far away, but if we integrate for too long, we will end up revisiting regions that have already been explored. The optimal choice will depend on the kinetic energy and where in the joint space the transition occurs.</p>
+<p>A practical solution to this is the <a class="reference external" href="https://jmlr.org/papers/volume15/hoffman14a/hoffman14a.pdf">No-U-Turn</a> trajectory termination criterion that allows the intergation time to be chosen dynamically. Samplers implementing this criterion are often reffered to as No-U-Turn samplers, or NUTS.</p>
+</div>
+<div class="section" id="Implementation">
+<h2>Implementation<a class="headerlink" href="#Implementation" title="Permalink to this headline">¶</a></h2>
+<p>In practice, we have to solve Hamilton’s equations <em>numerically</em>. This leads to inaccuracies that add with integration time and scale with the number of dimensions. The geometry of the problem motivates the choice of <strong>Symplectic integrators</strong> for which the errors at least oscillate around the true values. Another aspect of their performance is that in regions of extreme curvature, the numerical trajectories diverge to infinity.</p>
+<p><img alt="Divergent transitions" class="no-scaled-link" src="_images/hmc4.pdf" style="width: 900px;" /></p>
+<p>While this may seem like a bad thing, the existence and location of <strong>divergent transitions</strong> is actually a very helpful diagnostic when implementing HMC in practice.</p>
+<p>We can also correct for the error induced by integration by defining a <strong>reversible transition</strong> (positive and negative momentum) and introducing an <strong>accept/reject Metropolis step</strong>, as the acceptance probability can be calculated exactly from the Hamiltonian.</p>
+<p>As we integrate numerically, the integration time becomes defined by a <strong>step size</strong> and <strong>number of steps</strong>. The step size can be optimised during the warmup phase, by defining a target metropolis acceptance rate (typically around 0.8). The number of steps, or trajectory length, is optimised dynamically during sampling via the No-U-Turn criterion mentioned above.</p>
+<p>Stan</p>
+<p><a class="reference external" href="https://mc-stan.org">Stan</a> is a software platform with a robust implementation of an adaptive HMC algorithm, including NUTS. Given a model specification and data, Stan will automatically optimise the <em>mass matrix</em> and <em>step size</em>, letting you focus on your model and inferences.</p>
+<p>We will work more with Stan in the second block of the course as a tool for implementing a Bayesian workflow.</p>
+</div>
+<div class="section" id="Diagnostics">
+<h2>Diagnostics<a class="headerlink" href="#Diagnostics" title="Permalink to this headline">¶</a></h2>
+<p>Like any MCMC algorithm, the <strong>effective sample size</strong> and <strong>Gelman-Rubin statistic</strong> can be used to judge the within-chain correlation and convergence of chains. The implementation of HMC also permits two new diagnostic tools:</p>
+<ul class="simple">
+<li><p><strong>Divergent transitions:</strong> As mentioned above, in regions of high curvature the results of numerical integration will diverge. We can use divergent transitions to notify us of the presence and also location of regions of high curvature.</p></li>
+<li><p><strong>E-BFMI:</strong> The energy Bayesian fraction of missing information quantifies the mismatch between <span class="math notranslate nohighlight">\(\pi(E|q)\)</span> and <span class="math notranslate nohighlight">\(\pi(E)\)</span>, allowing us to diagnose poorly-chosen kinetic energies. If the E-BFMI is below around 0.3, it seems that the warmup is unable to find a decent mass matrix for the presented problem.</p></li>
+</ul>
+<p>If these kind of divergences are encountered, it is likely that some form of model reparametrisation can help out.</p>
+</div>
+<div class="section" id="Visualisation">
+<h2>Visualisation<a class="headerlink" href="#Visualisation" title="Permalink to this headline">¶</a></h2>
+<p>A nice visualisation of HMC and other algorithms can be found <a class="reference external" href="https://chi-feng.github.io/mcmc-demo/app.html">here</a>, by Chi Feng.</p>
+</div>
+<div class="section" id="Demonstration">
+<h2>Demonstration<a class="headerlink" href="#Demonstration" title="Permalink to this headline">¶</a></h2>
+<p>We can demonstrate the power of these diagnostics with using Stan and the classic <em>Eight schools problem</em>. See Section 5.5. of <a class="reference external" href="http://www.stat.columbia.edu/~gelman/book/">Bayesian Data Analysis</a> by Gelman et al. for more information.</p>
+<p>In summary, the goal is to understand the impact of extra coaching programs on student grades, conducted in parallel in <span class="math notranslate nohighlight">\(J=8\)</span> different schools. For each school, we have an estimated impact <span class="math notranslate nohighlight">\(y_j\)</span>, and a standard error of this estimate, <span class="math notranslate nohighlight">\(\sigma_j\)</span>.</p>
+<p>Let’s say we want to consider the data from all schools in our final conclusion. We think the schools and coaching programs are similar, but admit they are not identical. To capture this, we use a <strong>hierarchical normal model</strong>.</p>
+<blockquote>
+<div><p>We will discuss hierarchical models more in block II of this course.</p>
+</div></blockquote>
+<p>We introduce parameters <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\tau\)</span> to describe the average impact and variance across all schools. Each school has a true impact <span class="math notranslate nohighlight">\(\theta_j\)</span>, and an observed impact <span class="math notranslate nohighlight">\(y_j\)</span>, as introduced above.</p>
+<p><img alt="The eight schools model" class="no-scaled-link" src="_images/8schools.pdf" style="width: 700px;" /></p>
+<p>The initial model is given in <code class="docutils literal notranslate"><span class="pre">stan/schools.stan</span></code>, and the data are introduced below.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">av</span>
+<span class="kn">from</span> <span class="nn">cmdstanpy</span> <span class="kn">import</span> <span class="n">CmdStanModel</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>cat stan/schools.stan
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+data {
+  int&lt;lower=0&gt; J;
+  real y[J];
+  real&lt;lower=0&gt; sigma[J];
+}
+
+parameters {
+  real mu;
+  real&lt;lower=0&gt; tau;
+  real theta[J];
+}
+
+model {
+  mu ~ normal(0, 5);
+  tau ~ cauchy(0, 5);
+
+  theta ~ normal(mu, tau);
+  y ~ normal(theta, sigma);
+}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">CmdStanModel</span><span class="p">(</span><span class="n">stan_file</span><span class="o">=</span><span class="s2">&quot;stan/schools.stan&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+INFO:cmdstanpy:found newer exe file, not recompiling
+INFO:cmdstanpy:compiled model file: /Users/fran/projects/bayesian_workflow_prep/stan/schools
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;J&quot;</span><span class="p">]</span><span class="o">=</span> <span class="mi">8</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;sigma&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fit</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">iter_sampling</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+INFO:cmdstanpy:start chain 1
+INFO:cmdstanpy:start chain 2
+INFO:cmdstanpy:start chain 3
+INFO:cmdstanpy:start chain 4
+INFO:cmdstanpy:finish chain 1
+INFO:cmdstanpy:finish chain 3
+INFO:cmdstanpy:finish chain 2
+INFO:cmdstanpy:finish chain 4
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fit</span><span class="o">.</span><span class="n">diagnose</span><span class="p">()</span>
+<span class="n">fit</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+INFO:cmdstanpy:Processing csv files: /var/folders/8d/cyg0_lx54mggm8v350vlx91r0000gn/T/tmpzj3y24z3/schools-202109021959-1-a16ki1ig.csv, /var/folders/8d/cyg0_lx54mggm8v350vlx91r0000gn/T/tmpzj3y24z3/schools-202109021959-2-1s8521o3.csv, /var/folders/8d/cyg0_lx54mggm8v350vlx91r0000gn/T/tmpzj3y24z3/schools-202109021959-3-4mkm3lm7.csv, /var/folders/8d/cyg0_lx54mggm8v350vlx91r0000gn/T/tmpzj3y24z3/schools-202109021959-4-sm8ngg5r.csv
+
+Checking sampler transitions treedepth.
+Treedepth satisfactory for all transitions.
+
+Checking sampler transitions for divergences.
+84 of 4000 (2.1%) transitions ended with a divergence.
+These divergent transitions indicate that HMC is not fully able to explore the posterior distribution.
+Try increasing adapt delta closer to 1.
+If this doesn&#39;t remove all divergences, try to reparameterize the model.
+
+Checking E-BFMI - sampler transitions HMC potential energy.
+The E-BFMI, 0.25, is below the nominal threshold of 0.3 which suggests that HMC may have trouble exploring the target distribution.
+If possible, try to reparameterize the model.
+
+Effective sample size satisfactory.
+
+Split R-hat values satisfactory all parameters.
+
+Processing complete.
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Mean</th>
+      <th>MCSE</th>
+      <th>StdDev</th>
+      <th>5%</th>
+      <th>50%</th>
+      <th>95%</th>
+      <th>N_Eff</th>
+      <th>N_Eff/s</th>
+      <th>R_hat</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>lp__</th>
+      <td>-15.0</td>
+      <td>0.45</td>
+      <td>6.0</td>
+      <td>-25.00</td>
+      <td>-15.0</td>
+      <td>-5.2</td>
+      <td>180.0</td>
+      <td>820.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>mu</th>
+      <td>4.4</td>
+      <td>0.11</td>
+      <td>3.1</td>
+      <td>-0.73</td>
+      <td>4.4</td>
+      <td>9.6</td>
+      <td>790.0</td>
+      <td>3600.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>tau</th>
+      <td>3.8</td>
+      <td>0.17</td>
+      <td>3.0</td>
+      <td>0.84</td>
+      <td>3.0</td>
+      <td>9.9</td>
+      <td>310.0</td>
+      <td>1400.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta[1]</th>
+      <td>6.1</td>
+      <td>0.16</td>
+      <td>5.3</td>
+      <td>-1.40</td>
+      <td>5.5</td>
+      <td>16.0</td>
+      <td>1089.0</td>
+      <td>4995.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta[2]</th>
+      <td>4.9</td>
+      <td>0.12</td>
+      <td>4.6</td>
+      <td>-2.30</td>
+      <td>4.8</td>
+      <td>13.0</td>
+      <td>1475.0</td>
+      <td>6764.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta[3]</th>
+      <td>4.0</td>
+      <td>0.13</td>
+      <td>4.9</td>
+      <td>-4.00</td>
+      <td>4.3</td>
+      <td>12.0</td>
+      <td>1483.0</td>
+      <td>6801.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta[4]</th>
+      <td>4.8</td>
+      <td>0.13</td>
+      <td>4.7</td>
+      <td>-2.80</td>
+      <td>4.9</td>
+      <td>12.0</td>
+      <td>1433.0</td>
+      <td>6572.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta[5]</th>
+      <td>3.5</td>
+      <td>0.14</td>
+      <td>4.5</td>
+      <td>-4.30</td>
+      <td>3.9</td>
+      <td>10.0</td>
+      <td>1036.0</td>
+      <td>4753.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta[6]</th>
+      <td>4.0</td>
+      <td>0.12</td>
+      <td>4.7</td>
+      <td>-3.50</td>
+      <td>4.3</td>
+      <td>11.0</td>
+      <td>1559.0</td>
+      <td>7153.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta[7]</th>
+      <td>6.4</td>
+      <td>0.17</td>
+      <td>5.1</td>
+      <td>-0.98</td>
+      <td>5.8</td>
+      <td>16.0</td>
+      <td>904.0</td>
+      <td>4149.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta[8]</th>
+      <td>4.8</td>
+      <td>0.13</td>
+      <td>5.2</td>
+      <td>-3.60</td>
+      <td>4.8</td>
+      <td>13.0</td>
+      <td>1577.0</td>
+      <td>7232.0</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Note the presence of divergent transitions and low E-BFMI. Let’s visualise the location of the divergent transitions.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fit_a</span> <span class="o">=</span> <span class="n">av</span><span class="o">.</span><span class="n">from_cmdstanpy</span><span class="p">(</span><span class="n">fit</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;J&quot;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;J&quot;</span><span class="p">])},</span>
+                          <span class="n">dims</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;J&quot;</span><span class="p">]})</span>
+<span class="n">av</span><span class="o">.</span><span class="n">plot_pair</span><span class="p">(</span><span class="n">fit_a</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">,</span> <span class="s2">&quot;tau&quot;</span><span class="p">,</span> <span class="s2">&quot;mu&quot;</span><span class="p">],</span>
+             <span class="n">divergences</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;J&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">])});</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/5-hamiltonian_mc_15_0.png" src="_images/5-hamiltonian_mc_15_0.png" />
+</div>
+</div>
+<p>We see that the divergent transitions are clustered around small tau values before an abrupt stop. This indicates a funnel geometry that the sampler is not able to penetrate.</p>
+<p>This is a well-known problem for models of this type. We can try to reparametrise our model using a <a class="reference external" href="https://mc-stan.org/docs/2_18/stan-users-guide/reparameterization-section.html">non-centred parametrisation</a>. We can introduce <span class="math notranslate nohighlight">\(\theta^\prime\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[\theta = \mu + \tau \theta^\prime,\]</div>
+<div class="math notranslate nohighlight">
+\[p(\theta^\prime | \mu, \tau) = \mathcal{N}(0, 1).\]</div>
+<p>This is implemented in the <code class="docutils literal notranslate"><span class="pre">stan/schools_nc.stan</span></code> model.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>cat stan/schools_nc.stan
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+data {
+  int&lt;lower=0&gt; J;
+  real y[J];
+  real&lt;lower=0&gt; sigma[J];
+}
+
+parameters {
+  real mu;
+  real&lt;lower=0&gt; tau;
+  real theta_prime[J];
+}
+
+transformed parameters {
+  real theta[J];
+
+  for (j in 1:J)
+    theta[j] = mu + tau * theta_prime[j];
+}
+
+model {
+  mu ~ normal(0, 5);
+  tau ~ cauchy(0, 5);
+
+  theta_prime ~ normal(0, 1);
+  y ~ normal(theta, sigma);
+}
+</pre></div></div>
+</div>
+<p>We can now try to fit this model instead…</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_nc</span> <span class="o">=</span> <span class="n">CmdStanModel</span><span class="p">(</span><span class="n">stan_file</span><span class="o">=</span><span class="s2">&quot;stan/schools_nc.stan&quot;</span><span class="p">)</span>
+<span class="n">fit_nc</span> <span class="o">=</span> <span class="n">model_nc</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">iter_sampling</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+INFO:cmdstanpy:found newer exe file, not recompiling
+INFO:cmdstanpy:compiled model file: /Users/fran/projects/bayesian_workflow_prep/stan/schools_nc
+INFO:cmdstanpy:start chain 1
+INFO:cmdstanpy:start chain 2
+INFO:cmdstanpy:start chain 3
+INFO:cmdstanpy:start chain 4
+INFO:cmdstanpy:finish chain 1
+INFO:cmdstanpy:finish chain 2
+INFO:cmdstanpy:finish chain 3
+INFO:cmdstanpy:finish chain 4
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fit_nc</span><span class="o">.</span><span class="n">diagnose</span><span class="p">()</span>
+<span class="n">fit_nc</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+INFO:cmdstanpy:Processing csv files: /var/folders/8d/cyg0_lx54mggm8v350vlx91r0000gn/T/tmpzj3y24z3/schools_nc-202109021959-1-l88z3sq5.csv, /var/folders/8d/cyg0_lx54mggm8v350vlx91r0000gn/T/tmpzj3y24z3/schools_nc-202109021959-2-fu__im24.csv, /var/folders/8d/cyg0_lx54mggm8v350vlx91r0000gn/T/tmpzj3y24z3/schools_nc-202109021959-3-aban8y1p.csv, /var/folders/8d/cyg0_lx54mggm8v350vlx91r0000gn/T/tmpzj3y24z3/schools_nc-202109021959-4-jbwdsw96.csv
+
+Checking sampler transitions treedepth.
+Treedepth satisfactory for all transitions.
+
+Checking sampler transitions for divergences.
+No divergent transitions found.
+
+Checking E-BFMI - sampler transitions HMC potential energy.
+E-BFMI satisfactory.
+
+Effective sample size satisfactory.
+
+Split R-hat values satisfactory all parameters.
+
+Processing complete, no problems detected.
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Mean</th>
+      <th>MCSE</th>
+      <th>StdDev</th>
+      <th>5%</th>
+      <th>50%</th>
+      <th>95%</th>
+      <th>N_Eff</th>
+      <th>N_Eff/s</th>
+      <th>R_hat</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>lp__</th>
+      <td>-6.900</td>
+      <td>0.061</td>
+      <td>2.40</td>
+      <td>-11.00</td>
+      <td>-6.500</td>
+      <td>-3.6</td>
+      <td>1500.0</td>
+      <td>9200.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>mu</th>
+      <td>4.400</td>
+      <td>0.052</td>
+      <td>3.30</td>
+      <td>-1.10</td>
+      <td>4.400</td>
+      <td>9.6</td>
+      <td>4000.0</td>
+      <td>24000.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>tau</th>
+      <td>3.600</td>
+      <td>0.059</td>
+      <td>3.20</td>
+      <td>0.23</td>
+      <td>2.900</td>
+      <td>10.0</td>
+      <td>3000.0</td>
+      <td>18000.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta_prime[1]</th>
+      <td>0.310</td>
+      <td>0.015</td>
+      <td>0.96</td>
+      <td>-1.20</td>
+      <td>0.310</td>
+      <td>1.9</td>
+      <td>4289.0</td>
+      <td>26151.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta_prime[2]</th>
+      <td>0.086</td>
+      <td>0.015</td>
+      <td>0.94</td>
+      <td>-1.50</td>
+      <td>0.097</td>
+      <td>1.6</td>
+      <td>4219.0</td>
+      <td>25729.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta_prime[3]</th>
+      <td>-0.084</td>
+      <td>0.014</td>
+      <td>0.95</td>
+      <td>-1.60</td>
+      <td>-0.082</td>
+      <td>1.5</td>
+      <td>4489.0</td>
+      <td>27371.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta_prime[4]</th>
+      <td>0.045</td>
+      <td>0.015</td>
+      <td>0.94</td>
+      <td>-1.50</td>
+      <td>0.037</td>
+      <td>1.6</td>
+      <td>3772.0</td>
+      <td>23001.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta_prime[5]</th>
+      <td>-0.160</td>
+      <td>0.013</td>
+      <td>0.93</td>
+      <td>-1.70</td>
+      <td>-0.160</td>
+      <td>1.4</td>
+      <td>5229.0</td>
+      <td>31884.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta_prime[6]</th>
+      <td>-0.073</td>
+      <td>0.014</td>
+      <td>0.94</td>
+      <td>-1.60</td>
+      <td>-0.070</td>
+      <td>1.5</td>
+      <td>4289.0</td>
+      <td>26152.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta_prime[7]</th>
+      <td>0.370</td>
+      <td>0.015</td>
+      <td>0.96</td>
+      <td>-1.30</td>
+      <td>0.410</td>
+      <td>1.9</td>
+      <td>4290.0</td>
+      <td>26156.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta_prime[8]</th>
+      <td>0.073</td>
+      <td>0.014</td>
+      <td>0.97</td>
+      <td>-1.50</td>
+      <td>0.059</td>
+      <td>1.7</td>
+      <td>4492.0</td>
+      <td>27392.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta[1]</th>
+      <td>6.100</td>
+      <td>0.090</td>
+      <td>5.60</td>
+      <td>-1.60</td>
+      <td>5.500</td>
+      <td>16.0</td>
+      <td>3933.0</td>
+      <td>23981.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta[2]</th>
+      <td>4.900</td>
+      <td>0.067</td>
+      <td>4.60</td>
+      <td>-2.50</td>
+      <td>4.800</td>
+      <td>12.0</td>
+      <td>4796.0</td>
+      <td>29245.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta[3]</th>
+      <td>3.900</td>
+      <td>0.081</td>
+      <td>5.10</td>
+      <td>-4.70</td>
+      <td>4.200</td>
+      <td>12.0</td>
+      <td>3994.0</td>
+      <td>24354.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta[4]</th>
+      <td>4.700</td>
+      <td>0.072</td>
+      <td>4.70</td>
+      <td>-3.00</td>
+      <td>4.600</td>
+      <td>12.0</td>
+      <td>4191.0</td>
+      <td>25554.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta[5]</th>
+      <td>3.600</td>
+      <td>0.070</td>
+      <td>4.70</td>
+      <td>-4.60</td>
+      <td>3.900</td>
+      <td>11.0</td>
+      <td>4505.0</td>
+      <td>27471.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta[6]</th>
+      <td>4.100</td>
+      <td>0.079</td>
+      <td>4.90</td>
+      <td>-3.80</td>
+      <td>4.200</td>
+      <td>12.0</td>
+      <td>3819.0</td>
+      <td>23289.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta[7]</th>
+      <td>6.300</td>
+      <td>0.080</td>
+      <td>5.00</td>
+      <td>-0.93</td>
+      <td>5.800</td>
+      <td>15.0</td>
+      <td>4005.0</td>
+      <td>24418.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>theta[8]</th>
+      <td>4.800</td>
+      <td>0.089</td>
+      <td>5.30</td>
+      <td>-3.50</td>
+      <td>4.700</td>
+      <td>13.0</td>
+      <td>3543.0</td>
+      <td>21606.0</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fit_a_nc</span> <span class="o">=</span> <span class="n">av</span><span class="o">.</span><span class="n">from_cmdstanpy</span><span class="p">(</span><span class="n">fit_nc</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;J&quot;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;J&quot;</span><span class="p">])},</span>
+                          <span class="n">dims</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;J&quot;</span><span class="p">]})</span>
+<span class="n">av</span><span class="o">.</span><span class="n">plot_pair</span><span class="p">(</span><span class="n">fit_a_nc</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">,</span> <span class="s2">&quot;tau&quot;</span><span class="p">,</span> <span class="s2">&quot;mu&quot;</span><span class="p">],</span>
+             <span class="n">divergences</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;J&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">])});</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/5-hamiltonian_mc_21_0.png" src="_images/5-hamiltonian_mc_21_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Further-reading">
+<h2>Further reading<a class="headerlink" href="#Further-reading" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Michael Betancourt’s <a class="reference external" href="https://arxiv.org/pdf/1701.02434.pdf">A Conceptual Introduction to Hamiltonian Monte Carlo</a>, on which the above is based.</p></li>
+<li><p>A more mathematical approach: Betancourt at al. (2017) <a class="reference external" href="https://projecteuclid.org/journals/bernoulli/volume-23/issue-4A/The-geometric-foundations-of-Hamiltonian-Monte-Carlo/10.3150/16-BEJ810.full">The geometric foundations of Hamiltonian Monte Carlo</a>, Bernoulli 23(4A), 2257-2298.</p></li>
+<li><p>The No-U-Turn algorithm: Gelman et al. (2014) <a class="reference external" href="https://jmlr.org/papers/volume15/hoffman14a/hoffman14a.pdf">The No-U-Turn Sampler: Adaptively Setting Path Lengths in Hamiltonian Monte Carlo</a>, Journal of Machine Learning Research 15, 1593-1623.</p></li>
+<li><p>The <a class="reference external" href="https://mc-stan.org">Stan website</a>.</p></li>
+<li><p>The eight schools problem: Section 5.5 of <a class="reference external" href="http://www.stat.columbia.edu/~gelman/book/">Bayesian Data Analysis</a> by Gelman et al.</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Johannes Buchner, Francesca Capel
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

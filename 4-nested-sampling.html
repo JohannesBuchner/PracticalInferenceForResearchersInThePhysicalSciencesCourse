@@ -1,0 +1,1038 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Nested sampling &mdash; MCI-course 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+  
+  
+    <link rel="canonical" href="https://johannesbuchner.github.io/UltraNest/4-nested-sampling.html"/>
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> MCI-course
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="preliminaries.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BooksAndPapers.html">Reading material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BooksAndPapers.html#Papers-for-Advanced-Methods">Papers for Advanced Methods</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MCI-course</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Nested sampling</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="Nested-sampling">
+<h1>Nested sampling<a class="headerlink" href="#Nested-sampling" title="Permalink to this headline">¶</a></h1>
+<p>Recall that we want to characterize the posterior distribution.</p>
+<p>It would solve our problem if we could approximate it with a sum of slabs:</p>
+<p><img alt="Approximation with slabs" src="_images/ns-slabs.png" /></p>
+<p>If we had the slabs heights and widths – volumes in general –, we could integrate the posterior.</p>
+<p>We would also know the posterior probability distributions.</p>
+<p>So lets try to find a way to find such nested slabs. We need a way to measure a sequence of heights (likelihood) and volume.</p>
+<p>Lets think about the volume enclosed above a likelihood threshold.</p>
+<p><img alt="Likelihood shells" class="no-scaled-link" src="_images/shells.png" style="width: 200px;" /></p>
+<p>Most of the volume will have some low likelihood, and some of it will have the highest likelihood, like so:</p>
+<p><img alt="Likelihood-Volume curve" src="_images/ns-LV-spacing.png" /></p>
+<p>If we had this knowledge, we could build our slabs by dividing the volume into equal sizes, and read off the height of our slabs by the corresponding likelihood values:</p>
+<p><img alt="Likelihood-Volume curve" src="_images/ns-LV-spacing.png" /></p>
+<p>Unfortunately, we do not know enough about our likelihood function to decompose the space into likelihood thresholds with equally spaced volumes. It is a really hard problem in more than one dimension.</p>
+<p>But what if we sampled <strong>randomly uniformly</strong> in the volume? That would also give us likelihood thresholds:</p>
+<p><img alt="Likelihood-Volume curve with sampling" src="_images/ns-LV-sampling.png" /></p>
+<p>We would get likelihoods that divide the space.</p>
+<p>We will not know the volume sliced by the likelihood (because we do not know the yellow curve).</p>
+<p>But order statistics tells us the distribution of the spacing. So we can estimate on average the slab volume (red). The most extreme slab is:</p>
+<p><span class="math notranslate nohighlight">\(\Delta V\)</span> ~ Beta(1, N)</p>
+<p>The height is <span class="math notranslate nohighlight">\(L\)</span> of the sample.</p>
+<p>Now we have a slab. Nested sampling is applying this idea repeatedly.</p>
+<p>Lets see it in action!</p>
+<div class="section" id="Recap">
+<h2>Recap<a class="headerlink" href="#Recap" title="Permalink to this headline">¶</a></h2>
+<p>We have some target function (the likelihood times the prior) in some parameter space, and we want to integrate it.</p>
+<p>As a toy example, we chose the following likelihood:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">loglikelihood</span><span class="p">(</span><span class="o">*</span><span class="n">parameters</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">parameters</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">parameters</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">*</span> <span class="mi">10</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>And we assume our prior is uniform in the domain -1/2 to +1/2 in each parameter. We use two parameters at the moment.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">lo</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span>
+<span class="n">hi</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">dim</span> <span class="o">=</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+<p>Lets plot this function in 2d:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+<span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">grid_unnormalised_logposterior</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">loglikelihood</span><span class="p">)(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+      <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">grid_unnormalised_logposterior</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
+      <span class="n">extent</span><span class="o">=</span><span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">),</span>
+      <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray_r&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/4-nested-sampling_15_0.png" src="_images/4-nested-sampling_15_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Nested-sampling-intro">
+<h2>Nested sampling intro<a class="headerlink" href="#Nested-sampling-intro" title="Permalink to this headline">¶</a></h2>
+<p>First, we parachute some walkers (called live points) into the parameter space:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">Nlive</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="n">live_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">Nlive</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span>
+<span class="n">live_points_loglikelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">loglikelihood</span><span class="p">)(</span><span class="o">*</span><span class="n">live_points</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">live_points</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">live_points</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/4-nested-sampling_19_0.png" src="_images/4-nested-sampling_19_0.png" />
+</div>
+</div>
+<p><img alt="Nested sampling" src="_images/nested-sampling.png" /></p>
+<p>They sample the entire prior volume <span class="math notranslate nohighlight">\(V=1\)</span>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">volume</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<p>The likelihood introduces an unique ordering to these points:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">live_points_loglikelihood</span><span class="p">)</span>
+<span class="n">order</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([16, 24, 23, 38, 11, 15,  7,  2, 21, 13,  6, 12, 25, 34, 18,  1,  4,
+       32, 31,  3,  8, 33, 39, 35, 29, 14, 20,  5, 30, 36,  0,  9, 27, 37,
+       17, 19, 22, 10, 28, 26])
+</pre></div></div>
+</div>
+<ul class="simple">
+<li><p>The likelihood distribution of these points follows the distribution of likelihood values of points distributed according to the prior.</p></li>
+<li><p>The points demarc likelihood thresholds, as visualised below. In between lies approximately similar prior volume. The fractions are distributed as <span class="math notranslate nohighlight">\(Beta(1, N_\mathrm{live})\)</span>.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">grid_unnormalised_logposterior</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">live_points_loglikelihood</span><span class="p">[</span><span class="n">order</span><span class="p">[::</span><span class="mi">4</span><span class="p">]],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;tab20b&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/4-nested-sampling_26_0.png" src="_images/4-nested-sampling_26_0.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>The volumes enclosed between each likelihood interval is Beta(1, N) of the total volume.</p></li>
+<li><p>But in most cases we do not have the grid above, so we do not know the exact volume. So we need to approximate it.</p></li>
+<li><p>Lets approximate with a random Beta(1, N) draw:</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">volume_shell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">beta</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">Nlive</span><span class="p">)</span>
+<span class="n">volume_shell</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.01573057892187748
+</pre></div></div>
+</div>
+<p>The volume remaining becomes smaller by this:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">volume</span> <span class="o">*=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">volume_shell</span>
+<span class="n">volume</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.9842694210781225
+</pre></div></div>
+</div>
+<p>Lets identify the worst point (lowest likelihood contour):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">lowest</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">live_points_loglikelihood</span><span class="p">)</span>
+<span class="n">Lmin</span> <span class="o">=</span> <span class="n">live_points_loglikelihood</span><span class="p">[</span><span class="n">lowest</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">live_points</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">live_points</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">live_points</span><span class="p">[</span><span class="n">lowest</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">live_points</span><span class="p">[</span><span class="n">lowest</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;x &#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">12</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/4-nested-sampling_32_0.png" src="_images/4-nested-sampling_32_0.png" />
+</div>
+</div>
+<p>We kill this walker! Lets add it to the dead points:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">dead_points</span> <span class="o">=</span> <span class="p">[</span><span class="n">live_points</span><span class="p">[</span><span class="n">lowest</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>
+<span class="n">dead_points_loglikelihoods</span> <span class="o">=</span> <span class="p">[</span><span class="n">Lmin</span><span class="p">]</span>
+<span class="n">dead_points_volume</span> <span class="o">=</span> <span class="n">volume_shell</span>
+
+</pre></div>
+</div>
+</div>
+<p>Now we have to replace the point with a new point <em>drawn from the prior</em>, but we only accept points whose <em>likelihoods is above Lmin</em>.</p>
+<p>So we need a <strong>likelihood-restricted prior sampling</strong> method (LRPS).</p>
+<p>A simple option is to draw and throw away bad points:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">LRPS_rejection</span><span class="p">(</span><span class="n">Lmin</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">proposed_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span>
+        <span class="n">proposed_points_loglikelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">loglikelihood</span><span class="p">)(</span><span class="o">*</span><span class="n">proposed_points</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">proposed_points_loglikelihood</span> <span class="o">&gt;</span> <span class="n">Lmin</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">proposed_points_loglikelihood</span> <span class="o">&gt;</span> <span class="n">Lmin</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">proposed_points</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span> <span class="n">proposed_points_loglikelihood</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">live_points</span><span class="p">[</span><span class="n">lowest</span><span class="p">],</span> <span class="n">live_points_loglikelihood</span><span class="p">[</span><span class="n">lowest</span><span class="p">]</span> <span class="o">=</span> <span class="n">LRPS_rejection</span><span class="p">(</span><span class="n">Lmin</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">live_points</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">live_points</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dead_points</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">dead_points</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;x &#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">12</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">live_points</span><span class="p">[</span><span class="n">lowest</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">live_points</span><span class="p">[</span><span class="n">lowest</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;* &#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">12</span><span class="p">);</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/4-nested-sampling_38_0.png" src="_images/4-nested-sampling_38_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">nested_sampling</span><span class="p">(</span><span class="n">Niter</span><span class="p">,</span> <span class="n">Nlive</span><span class="p">):</span>
+    <span class="n">volume</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">live_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">Nlive</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span>
+    <span class="n">live_points_loglikelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">loglikelihood</span><span class="p">)(</span><span class="o">*</span><span class="n">live_points</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span>
+
+    <span class="n">dead_points</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">dead_points_loglikelihoods</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">dead_points_volume</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">volume_remaining</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Niter</span><span class="p">):</span>
+        <span class="c1"># find the current likelihood threshold</span>
+        <span class="n">Lmin</span> <span class="o">=</span> <span class="n">live_points_loglikelihood</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">lowest</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">live_points_loglikelihood</span><span class="p">)</span>
+
+        <span class="c1"># shrink volume</span>
+        <span class="n">volume_shell_fraction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">beta</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">Nlive</span><span class="p">)</span>
+        <span class="n">volume_shell</span> <span class="o">=</span> <span class="n">volume</span> <span class="o">*</span> <span class="n">volume_shell_fraction</span>
+        <span class="n">volume</span> <span class="o">*=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">volume_shell_fraction</span>
+
+        <span class="c1"># eject this point</span>
+        <span class="n">dead_points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">live_points</span><span class="p">[</span><span class="n">lowest</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="n">dead_points_loglikelihoods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">Lmin</span><span class="p">))</span>
+        <span class="n">dead_points_volume</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">volume_shell</span><span class="p">)</span>
+        <span class="n">volume_remaining</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">volume</span><span class="p">)</span>
+
+        <span class="c1"># replace point if we can</span>
+        <span class="n">replacement</span> <span class="o">=</span> <span class="n">LRPS_rejection</span><span class="p">(</span><span class="n">Lmin</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">replacement</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">break</span>
+        <span class="n">live_points</span><span class="p">[</span><span class="n">lowest</span><span class="p">],</span> <span class="n">live_points_loglikelihood</span><span class="p">[</span><span class="n">lowest</span><span class="p">]</span> <span class="o">=</span> <span class="n">replacement</span>
+
+    <span class="k">return</span> <span class="n">dead_points</span><span class="p">,</span> <span class="n">dead_points_loglikelihoods</span><span class="p">,</span> <span class="n">dead_points_volume</span><span class="p">,</span> <span class="n">volume_remaining</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[82]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">dead_points</span><span class="p">,</span> <span class="n">dead_points_loglikelihoods</span><span class="p">,</span> <span class="n">dead_points_volume</span><span class="p">,</span> <span class="n">volume_remaining</span> <span class="o">=</span> <span class="n">nested_sampling</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="n">Nlive</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[85]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">volume_remaining</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Iteration&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Volume&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/4-nested-sampling_41_0.png" src="_images/4-nested-sampling_41_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[89]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dead_points_loglikelihoods</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Iteration&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;ln(Likelihood)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/4-nested-sampling_42_0.png" src="_images/4-nested-sampling_42_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[83]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">volume_remaining</span><span class="p">,</span> <span class="n">dead_points_loglikelihoods</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">drawstyle</span><span class="o">=</span><span class="s1">&#39;steps-pre&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Likelihood&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Volume enclosed&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/4-nested-sampling_43_0.png" src="_images/4-nested-sampling_43_0.png" />
+</div>
+</div>
+<p>Compute the integral:</p>
+<p><span class="math notranslate nohighlight">\(Z\approx\sum_i \Delta V_i \times L_i\)</span></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[90]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">evidence</span> <span class="o">=</span> <span class="p">(</span><span class="n">dead_points_volume</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">dead_points_loglikelihoods</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[78]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bayesian evidence: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">evidence</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Bayesian evidence: 0.001182
+</pre></div></div>
+</div>
+<p>Compute the normalised weight of each dead point:</p>
+<p><span class="math notranslate nohighlight">\(w_i = \Delta V_i \times L_i\)</span></p>
+<p>This gives us weighted posterior samples!</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[84]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">dead_points_weight</span> <span class="o">=</span> <span class="n">dead_points_volume</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">dead_points_loglikelihoods</span><span class="p">)</span> <span class="o">/</span> <span class="n">evidence</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[92]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dead_points_weight</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Iteration&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Dead point importance weight&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/4-nested-sampling_49_0.png" src="_images/4-nested-sampling_49_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[93]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">effective_sample_size</span><span class="p">(</span><span class="n">importance_weights</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">importance_weights</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">importance_weights</span> <span class="o">/</span> <span class="n">importance_weights</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="p">)</span>
+
+<span class="s1">&#39;Effective number of samples: </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">effective_sample_size</span><span class="p">(</span><span class="n">dead_points_weight</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[93]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;Effective number of samples: 57&#39;
+</pre></div></div>
+</div>
+<p>Lets again get unweighted (equally weighted) posterior samples by resampling with repetition:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[94]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">indices_chosen</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dead_points_weight</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="n">dead_points_weight</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">effective_sample_size</span><span class="p">(</span><span class="n">dead_points_weight</span><span class="p">))</span>
+<span class="n">posterior_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dead_points</span><span class="p">)[</span><span class="n">indices_chosen</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[95]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">posterior_samples</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">posterior_samples</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/4-nested-sampling_53_0.png" src="_images/4-nested-sampling_53_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Exercise-1-(10-points)">
+<h2>Exercise 1 (10 points)<a class="headerlink" href="#Exercise-1-(10-points)" title="Permalink to this headline">¶</a></h2>
+<p>Instead of terminating after Niter iterations, compute the largest live point evidence contribution possible: volume times highest likelihood. Terminate when this Z_live is very small compared to the evidence summed up so far: <span class="math notranslate nohighlight">\(Z_{live} &lt; 10^{-3} \times Z\)</span></p>
+</div>
+<div class="section" id="Exercise-2-(30-points)">
+<h2>Exercise 2 (30 points)<a class="headerlink" href="#Exercise-2-(30-points)" title="Permalink to this headline">¶</a></h2>
+<p>Rejection sampling is a terribly inefficient LRPS scheme. Lets replace it.</p>
+<p>Implement MCMC as a LRPS scheme. Replace the LRPS_rejection function with one that picks a random live point, runs a MCMC chain for a fixed number of iterations, and returns the found point.</p>
+<p>Hints:</p>
+<ul class="simple">
+<li><p>MCMC should run on the prior as the target, not the likelihood. The Metropolis rule should deterministically accept if L&gt;Lmin. So reject if outside the prior and if below Lmin.</p></li>
+<li><p>Maybe the standard deviation of the live points is a good proposal size?</p></li>
+<li><p>Run for many iterations (1000s) before returning a new point to nested sampling.</p></li>
+</ul>
+</div>
+<div class="section" id="Homework-exercise-1-(10-points)">
+<h2>Homework exercise 1 (10 points)<a class="headerlink" href="#Homework-exercise-1-(10-points)" title="Permalink to this headline">¶</a></h2>
+<p>Make several nested sampling runs.</p>
+<p>Plot the scatter in evidence.</p>
+<p>Plot the scatter in posterior distributions.</p>
+<p>Reference: NESTCHECK paper</p>
+</div>
+<div class="section" id="Questions">
+<h2>Questions<a class="headerlink" href="#Questions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>How does the volume decrease with iteration? Linearly, Exponentially, …?</p></li>
+<li><p>What other LRPS schemes can you imagine? How would you sample a new point in the prior space under a likelihood threshold?</p></li>
+</ul>
+</div>
+<div class="section" id="Homework-exercise-2-(60-points)">
+<h2>Homework exercise 2 (60 points)<a class="headerlink" href="#Homework-exercise-2-(60-points)" title="Permalink to this headline">¶</a></h2>
+<p>Set up a target likelihood which sums two Gaussians:</p>
+<p><span class="math notranslate nohighlight">\(f(\theta)=NormalPDF(\theta,0) + NormalPDF(\theta + \Delta, 1).\)</span></p>
+<p>Plot <span class="math notranslate nohighlight">\(\Delta\)</span> vs the number of likelihood function calls needed.</p>
+<p>For this, use the convergence from exercise 1. You can choose a LRPS scheme.</p>
+</div>
+</div>
+<div class="section" id="Ticket-to-leave">
+<h1>Ticket to leave<a class="headerlink" href="#Ticket-to-leave" title="Permalink to this headline">¶</a></h1>
+<p>Fill out the <a class="reference external" href="https://indico.ph.tum.de/event/6875/surveys/9">form below</a> and then you can leave the class. (+5 points)</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%html</span>
+
+<span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://indico.ph.tum.de/event/6875/surveys/9&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;width: 100%; height: 400px&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<iframe src="https://indico.ph.tum.de/event/6875/surveys/9" style="width: 100%; height: 400px"></iframe></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Johannes Buchner, Francesca Capel
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

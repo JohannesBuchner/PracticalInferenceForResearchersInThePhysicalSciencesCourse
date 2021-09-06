@@ -1,0 +1,1331 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Bayes on Grids &mdash; MCI-course 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+  
+  
+    <link rel="canonical" href="https://johannesbuchner.github.io/UltraNest/1BayesOnGrids.html"/>
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> MCI-course
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="preliminaries.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BooksAndPapers.html">Reading material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BooksAndPapers.html#Papers-for-Advanced-Methods">Papers for Advanced Methods</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MCI-course</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Bayes on Grids</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="Bayes-on-Grids">
+<h1>Bayes on Grids<a class="headerlink" href="#Bayes-on-Grids" title="Permalink to this headline">¶</a></h1>
+<p>Concepts taught here:</p>
+<ul class="simple">
+<li><p>Probabilistic generative models (PGM)</p></li>
+<li><p>How posterior distributions and evidence answer interesting science questions</p></li>
+<li><p>How these can be computed numerically</p></li>
+<li><p>Prior predictive checks</p></li>
+<li><p>Bayesian model comparison</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">log10</span><span class="p">,</span> <span class="n">exp</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">pi</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="c1"># if you cannot see plots, you may need to include: %matplotlib inline</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Introduction">
+<h2>Introduction<a class="headerlink" href="#Introduction" title="Permalink to this headline">¶</a></h2>
+<p>Lets say you are given a data set of two observables, period and luminosity, and are told: <strong>“Fit a line to these data”</strong>.</p>
+<p>To have a concrete example, lets generate some data:</p>
+</div>
+</div>
+<div class="section" id="Generative-process-(unknown-to-observers)">
+<h1>Generative process (unknown to observers)<a class="headerlink" href="#Generative-process-(unknown-to-observers)" title="Permalink to this headline">¶</a></h1>
+<p>We assume there is a physical, perhaps stochastic process which generates observations. This includes making the objects of interest in the Universe, our observing equipment.</p>
+<p>For simulating, we choose this process with all its details. (Later, as observers, we will not know it and will try to infer it.)</p>
+<p>A <strong>probabilistic generative model (PGM)</strong> is also a story. Here is the story of this simulated Universe:</p>
+<p><img alt="PGM" src="_images/PGM-full.png" /></p>
+<p>First, cepheids are created from Gaussian distributions of periods and metallicities.</p>
+<p>For those interested: short videos on <a class="reference external" href="https://www.youtube.com/watch?v=7ohkKiZTJOg">Cepheids</a>, a type of pulsating, massive, yellow stars and <a class="reference external" href="https://www.youtube.com/watch?v=CLrVwVeTN78">metallicities</a>, a measure of heavier-than-helium element content.</p>
+<p>Each cepheid follows the luminosity-period-metallicity law, which deterministically determines its luminosity as follows:</p>
+<p><span class="math notranslate nohighlight">\(\log L=0.2 \times (\alpha + \beta \times (\log(P / {10 \mathrm{days}}) + \gamma \times Z))\)</span></p>
+<p>with <span class="math notranslate nohighlight">\(\alpha=-4.4\)</span>, <span class="math notranslate nohighlight">\(\beta=-2.8\)</span> <span class="math notranslate nohighlight">\(\gamma=-0.3\)</span>. In code:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">luminosity_model</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="n">metallicity</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">P0</span><span class="o">=</span><span class="mf">10.0</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span> <span class="o">*</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">+</span> <span class="n">beta</span> <span class="o">*</span> <span class="p">(</span><span class="n">log10</span><span class="p">(</span><span class="n">period</span><span class="o">/</span><span class="n">P0</span><span class="p">)</span> <span class="o">+</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">metallicity</span><span class="p">)))</span>
+
+<span class="n">true_alpha</span> <span class="o">=</span> <span class="o">-</span><span class="mf">4.4</span>
+<span class="n">true_beta</span>  <span class="o">=</span> <span class="o">-</span><span class="mf">2.8</span>
+<span class="n">true_gamma</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.3</span>
+
+</pre></div>
+</div>
+</div>
+<p>Here is a plot of our law:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">grid_P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">4000</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid_P</span><span class="p">,</span> <span class="n">luminosity_model</span><span class="p">(</span><span class="n">grid_P</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">true_alpha</span><span class="p">,</span> <span class="n">true_beta</span><span class="p">,</span> <span class="n">true_gamma</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Period [days]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Luminosity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;True Law (Z=0)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/1BayesOnGrids_8_0.png" src="_images/1BayesOnGrids_8_0.png" />
+</div>
+</div>
+<p>Lets now create our cepheids. Here are their true properties:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># set the random number generator seed so that we get a consistent data sample:</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">N_obs</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="n">true_metallicity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N_obs</span><span class="p">)</span>
+<span class="n">true_period</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">1.8</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N_obs</span><span class="p">)</span>
+<span class="n">true_luminosity</span> <span class="o">=</span> <span class="n">luminosity_model</span><span class="p">(</span><span class="n">true_period</span><span class="p">,</span> <span class="n">true_metallicity</span><span class="p">,</span> <span class="n">true_alpha</span><span class="p">,</span> <span class="n">true_beta</span><span class="p">,</span> <span class="n">true_gamma</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid_P</span><span class="p">,</span> <span class="n">luminosity_model</span><span class="p">(</span><span class="n">grid_P</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">true_alpha</span><span class="p">,</span> <span class="n">true_beta</span><span class="p">,</span> <span class="n">true_gamma</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">true_period</span><span class="p">,</span> <span class="n">true_luminosity</span><span class="p">,</span> <span class="s1">&#39;x &#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Period [days]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Luminosity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;True sample properties&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/1BayesOnGrids_10_0.png" src="_images/1BayesOnGrids_10_0.png" />
+</div>
+</div>
+<p>Notice there is some scatter, because of the metallicity effect.</p>
+<p><strong>Important</strong>: All of the above are properties we do not know.</p>
+<p>The final step in the generating process is to take observations:</p>
+<div class="section" id="Generate-some-observed-data">
+<h2>Generate some observed data<a class="headerlink" href="#Generate-some-observed-data" title="Permalink to this headline">¶</a></h2>
+<p>Lets simulate what the observer can get their hands on, which are noisy measurements:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">experimental_noise_period</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N_obs</span><span class="p">)</span>
+<span class="n">experimental_noise_luminosity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N_obs</span><span class="p">)</span>
+
+<span class="n">obs_period</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">true_period</span><span class="p">,</span> <span class="n">experimental_noise_period</span><span class="p">)</span>
+<span class="n">obs_luminosity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">true_luminosity</span><span class="p">,</span> <span class="n">experimental_noise_luminosity</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">obs_period</span><span class="p">,</span> <span class="n">xerr</span><span class="o">=</span><span class="n">experimental_noise_period</span><span class="p">,</span>
+             <span class="n">y</span><span class="o">=</span><span class="n">obs_luminosity</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">experimental_noise_luminosity</span><span class="p">,</span>
+             <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">capsize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">elinewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Period [days]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Luminosity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Observed sample properties&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/1BayesOnGrids_15_0.png" src="_images/1BayesOnGrids_15_0.png" />
+</div>
+</div>
+<p>Here is the full generative process as a graphical model:</p>
+<p><img alt="PGM" src="_images/PGM-full.png" /></p>
+</div>
+<div class="section" id="Inference-Problem">
+<h2>Inference Problem<a class="headerlink" href="#Inference-Problem" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="Motivation">
+<h1>Motivation<a class="headerlink" href="#Motivation" title="Permalink to this headline">¶</a></h1>
+<p>If we knew the period-luminosity relationship, we could infer the intrinsic luminosity by just measuring the period. –&gt; This <strong>predictiveness</strong> is useful for cosmology</p>
+<p>The period-luminosity relationship can also tell us something about the interior of stars –&gt; Comparing the data to models gives insights about <strong>physical processes</strong> in the Universe.</p>
+</div>
+<div class="section" id="Inference">
+<h1>Inference<a class="headerlink" href="#Inference" title="Permalink to this headline">¶</a></h1>
+<p>We lack information, which introduces uncertainty.</p>
+<ol class="arabic simple">
+<li><p>One source of uncertainty is that we do not know the true process. For example, we may not be aware that metallicity (which we did not measure) is part of the generative model. This is <strong>systematic uncertainty</strong> (aka epistemic uncertainty).</p></li>
+<li><p>Another source of uncertainty is our limited data: The instrument does not allow us to measure periods and luminosities perfectly and we only have a finite data set. This is <strong>statistical uncertainty</strong> (alearic uncertainty).</p></li>
+</ol>
+<p>We address (2) by quantifying the uncertainty assuming a probabilistic generative model (<strong>parameter estimation</strong>). We address (1) by either criticising them in isolation (<strong>model criticism</strong>), for example with visualisation or exploring several models and comparing them (<strong>model comparison</strong>).</p>
+</div>
+<div class="section" id="Assumptions">
+<h1>Assumptions<a class="headerlink" href="#Assumptions" title="Permalink to this headline">¶</a></h1>
+<p>So we want to learn the period-luminosity relationship. We assume it has the shape:</p>
+<p><span class="math notranslate nohighlight">\(\log L=0.2 \times (\alpha + \beta \times (\log(P / {10 \mathrm{days}}))\)</span></p>
+<p>As you see, our model is a simplification and approximation of the true process.</p>
+<p>From our sample, we have uncertain Gaussian measurements of L and uncertain measurements of P.</p>
+</div>
+<div class="section" id="Goals">
+<h1>Goals<a class="headerlink" href="#Goals" title="Permalink to this headline">¶</a></h1>
+<p>We want to know the two parameters:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\alpha\)</span>: related to the luminosity for 10 days-periodic cepheids and</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta\)</span>: related to how strongly the luminosity and period are related.</p></li>
+</ul>
+<p>But what does that really mean to “know” or “constrain” parameters?</p>
+<div class="section" id="Why-Bayesian-inference">
+<h2>Why Bayesian inference<a class="headerlink" href="#Why-Bayesian-inference" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>There is a true value out there in the Universe, but we will never be able to measure it perfectly with infinite precision.</p></li>
+<li><p>We can instead talk about it being within some interval, or not.</p></li>
+<li><p>With probability theory, we can talk about the probability of the parameter to be within a interval.</p>
+<ul>
+<li><p>We use parameter probability distributions to describe our current state of information.</p></li>
+<li><p>These do not imply the value really has a distribution. (It also does not mean that if you created many Universes, they would follow that distribution)</p></li>
+</ul>
+</li>
+</ul>
+<p>So if we have some data <span class="math notranslate nohighlight">\(D\)</span>, we would like a method to produce a probability distribution for us, <span class="math notranslate nohighlight">\(P(\alpha)\)</span>.</p>
+<p>Since the probability is conditional on what data we feed it, we can write <span class="math notranslate nohighlight">\(P(\alpha|D)\)</span>, which is read as “The probability of <span class="math notranslate nohighlight">\(\alpha\)</span> given D”.</p>
+<p>The probability distribution is normalised (<span class="math notranslate nohighlight">\(\int_{-\infty}^\infty P(\alpha|D) d\alpha=1\)</span>).</p>
+<p>Unfortunately, there is no method which can produce <span class="math notranslate nohighlight">\(P(\alpha|D)\)</span> just from D. However, if we knew <span class="math notranslate nohighlight">\(\alpha\)</span>, we can produce data sets! This generating is what we did above.</p>
+<p>So we can talk about how frequently some dataset D is produced given <span class="math notranslate nohighlight">\(\alpha\)</span>: <span class="math notranslate nohighlight">\(P(D|\alpha)\)</span>. This probability distribution is normalised, but over all possible data outcomes: (<span class="math notranslate nohighlight">\(\int_{-\infty}^\infty P(D|\alpha) dD=1\)</span>).</p>
+</div>
+</div>
+<div class="section" id="Enter-Bayes-theorem">
+<h1>Enter Bayes theorem<a class="headerlink" href="#Enter-Bayes-theorem" title="Permalink to this headline">¶</a></h1>
+<p><img alt="Conditional probability" src="_images/conditional-probability.png" /></p>
+<p>A simple Venn diagram (above) can tell you that</p>
+<p><span class="math notranslate nohighlight">\(P(A \cap B) P(A) = P(B \cap A) P(B)\)</span></p>
+<p>The law of conditional probabilities is analogous:</p>
+<p><span class="math notranslate nohighlight">\(P(A | B) P(A) = P(B | A) P(B)\)</span></p>
+<p>If we translate this to our problem, and move one term over, we get Bayes’ theorem:</p>
+<p><span class="math notranslate nohighlight">\(P(\alpha|D) = \frac{P(D|\alpha) \times P(\alpha)}{P(D)}\)</span></p>
+<p>where the terms are:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(\alpha|D)\)</span>: Posterior probability distribution</p>
+<ul>
+<li><p>This is the information we want: A probability over <span class="math notranslate nohighlight">\(\alpha\)</span> given the data.</p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(P(D|\alpha)\)</span>: Sampling distribution</p>
+<ul>
+<li><p>This is information we have: It encodes how data are probabilistically generated, assuming our model and given the model parameter <span class="math notranslate nohighlight">\(\alpha\)</span>.</p></li>
+<li><p>It is a function of <span class="math notranslate nohighlight">\(\alpha\)</span>, not a probability density over <span class="math notranslate nohighlight">\(\alpha\)</span>. It helps us update a auxiliary probability density over <span class="math notranslate nohighlight">\(\alpha\)</span>, namely:</p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(P(\alpha)\)</span>: Prior probability distribution (of <span class="math notranslate nohighlight">\(\alpha\)</span>)</p>
+<ul>
+<li><p>This probability distribution is a starting point we have to use.</p></li>
+<li><p>It is our state of information before we take the data.</p></li>
+<li><p>For example:</p>
+<ul>
+<li><p>A maximally ignorant state (very wide flat distribution) (Jeffrey’s priors maximize the entropy)</p></li>
+<li><p>A informed state from previous experiments</p></li>
+<li><p>A informed state from prior theoretical knowledge (part of the model)</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>The Bayesian evidence or marginal likelihood</p>
+<ul>
+<li><p>We can also compute this because we know that the posterior needs to be normalised: <span class="math notranslate nohighlight">\(P(D)=\int_{-\infty}^\infty P(\alpha|D) d\alpha=\int_{-\infty}^\infty P(D|\alpha) \times P(\alpha) d\alpha\)</span>.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="Bayes-theorem-in-practice-(with-grids)">
+<h1>Bayes theorem in practice (with grids)<a class="headerlink" href="#Bayes-theorem-in-practice-(with-grids)" title="Permalink to this headline">¶</a></h1>
+<p>Lets use uninformative priors. “Let the data speak for themselves” they say. Lets see what that means.</p>
+<p>Lets try a uniform prior probability on <span class="math notranslate nohighlight">\(\alpha\)</span> between -10 and 0:</p>
+<p><span class="math notranslate nohighlight">\(P(\alpha) = 1 / 10\)</span> for <span class="math notranslate nohighlight">\(\alpha\in[-10,0]\)</span> and zero elsewhere.</p>
+<p>Another way to write it is like this:</p>
+<p><span class="math notranslate nohighlight">\(\alpha\)</span> ~ Uniform(-10, 0)</p>
+<p>Read “~” as “is distributed as a”.</p>
+<p>Lets generate a grid to represent this:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">N_grid</span> <span class="o">=</span> <span class="mi">401</span>
+
+<span class="n">alphas_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">N_grid</span><span class="p">)</span>
+<span class="n">alphas_middle</span> <span class="o">=</span> <span class="p">(</span><span class="n">alphas_grid</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">alphas_grid</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">alphas_step</span> <span class="o">=</span> <span class="p">(</span><span class="n">alphas_grid</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">alphas_grid</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">alphas_middle</span><span class="p">[::</span><span class="mi">10</span><span class="p">]</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([-9.9875, -9.7375, -9.4875, -9.2375, -8.9875, -8.7375, -8.4875,
+       -8.2375, -7.9875, -7.7375, -7.4875, -7.2375, -6.9875, -6.7375,
+       -6.4875, -6.2375, -5.9875, -5.7375, -5.4875, -5.2375, -4.9875,
+       -4.7375, -4.4875, -4.2375, -3.9875, -3.7375, -3.4875, -3.2375,
+       -2.9875, -2.7375, -2.4875, -2.2375, -1.9875, -1.7375, -1.4875,
+       -1.2375, -0.9875, -0.7375, -0.4875, -0.2375])
+</pre></div></div>
+</div>
+<p>Each value is assumed equally probable by our prior.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">prior_density</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">alphas_grid</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">alphas_grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">prior</span> <span class="o">=</span> <span class="n">prior_density</span> <span class="o">*</span> <span class="n">alphas_step</span>
+</pre></div>
+</div>
+</div>
+<p>But what if we used a flat prior (uniform spacing) on <span class="math notranslate nohighlight">\(\log-\alpha\)</span> instead?</p>
+<p>It would be uninformative (flat) in that variable, but the prior on <span class="math notranslate nohighlight">\(\alpha\)</span> would not be flat.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">alphas_middle</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Flat prior on $</span><span class="se">\\</span><span class="s2">alpha$&quot;</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="o">**</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N_grid</span><span class="p">),</span> <span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Flat prior on $\log-</span><span class="se">\\</span><span class="s2">alpha$&quot;</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">alpha$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Probability density&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/1BayesOnGrids_23_0.png" src="_images/1BayesOnGrids_23_0.png" />
+</div>
+</div>
+<p>As you can see, there is no objectively uniform prior – it depends on the parameterization!</p>
+<p>Conversely, any prior is flat in some reparameterization.</p>
+<p>Given a <span class="math notranslate nohighlight">\(\alpha\)</span> value and some data D, we need a function that computes the probability for those data to arise from it.</p>
+<p>So we need to specify a model:</p>
+<p><img alt="model" src="_images/PGM-modelled.png" /></p>
+<p>We have a deterministic part of the model:</p>
+<p><span class="math notranslate nohighlight">\(\log L(P|\alpha,\beta)=0.2 \times \left(\alpha + \beta \times (\log(P / {10 \mathrm{days}})\right)\)</span></p>
+<p>For now we assume <span class="math notranslate nohighlight">\(\beta = -3\)</span> to keep the problem 1d.</p>
+<p>This allows us to predict L given a P. But we only have a measured P and a measured L. For now we ignore the small P uncertainties, but write for the observed L:</p>
+<p>$ L_i$ ~ Normal(<span class="math notranslate nohighlight">\(L(P_i|\alpha,\beta)\)</span>, <span class="math notranslate nohighlight">\(\sigma_i\)</span>)</p>
+<p>We know <span class="math notranslate nohighlight">\(L_i\)</span> from our measurements and <span class="math notranslate nohighlight">\(\sigma_i\)</span> from calibration data of our instrument (a sort of model as well).</p>
+<p>For one data point <span class="math notranslate nohighlight">\(d_i=(P_i, L_i,\sigma_i)\)</span> given <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>, our Gaussian likelihood is therefore</p>
+<p><span class="math notranslate nohighlight">\(P(d_i|\alpha) = \mathrm{GaussianPDF}(L_i | L(P_i|\alpha,\beta), \sigma_i)\)</span></p>
+<p>or spelling it out:</p>
+<p><span class="math notranslate nohighlight">\(P(d_i|\alpha) = (2 \pi \sigma_i^2)^{-\frac{1}{2}} \exp\left(-\left(\frac{L_i - L(P_i|\alpha,\beta)}{\sigma_i}\right)^2/2\right)\)</span></p>
+<p><span class="math notranslate nohighlight">\(P(d_i|\alpha) = (2 \pi \sigma_i^2)^{-\frac{1}{2}} \exp\left(\frac{L_i - L(P_i|\alpha,\beta)}{\sigma_i})^2)\right)^{-\frac{1}{2}}\)</span></p>
+<p>Since we want to analyse all data points and require this model to hold for all (logical AND), we multiply the probabilities and obtain our likelihood function:</p>
+<p><span class="math notranslate nohighlight">\(P(D|\alpha) = \prod_i P(d_i|\alpha)\)</span></p>
+<p>If we drop some constant factors and work in logarithms, we can write:</p>
+<p>$-2 <span class="math">\log `P(D\|:nbsphinx-math:</span>alpha`) = <span class="math">\sum</span>_i <span class="math">\left`(:nbsphinx-math:</span>frac{L_i - L(P_i|alpha,beta)}{sigma_i}`:nbsphinx-math:<cite>right</cite>)^2 $</p>
+<p>Which is sometimes referred to as <span class="math notranslate nohighlight">\(\chi^2\)</span> – it is just the -2 times the log-likelihood of a Gaussian observation model.</p>
+<p>Lets implement this:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">loglikelihood</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="o">=-</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">expected_luminosities</span> <span class="o">=</span> <span class="n">luminosity_model</span><span class="p">(</span><span class="n">obs_period</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">,</span> <span class="n">metallicity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">chi2</span> <span class="o">=</span> <span class="p">(((</span><span class="n">obs_luminosity</span> <span class="o">-</span> <span class="n">expected_luminosities</span><span class="p">)</span> <span class="o">/</span> <span class="n">experimental_noise_luminosity</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">chi2</span> <span class="o">/</span> <span class="mi">2</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">generate_luminosity_data</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="o">=-</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">experimental_noise_period</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N_obs</span><span class="p">)</span>  <span class="c1"># not used</span>
+    <span class="n">experimental_noise_luminosity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N_obs</span><span class="p">)</span>
+
+    <span class="n">true_luminosity</span> <span class="o">=</span> <span class="n">luminosity_model</span><span class="p">(</span><span class="n">obs_period</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">,</span> <span class="n">metallicity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">obs_luminosity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">true_luminosity</span><span class="p">,</span> <span class="n">experimental_noise_luminosity</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">obs_luminosity</span>
+
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Prior-predictive-checks">
+<h1>Prior predictive checks<a class="headerlink" href="#Prior-predictive-checks" title="Permalink to this headline">¶</a></h1>
+<p>Lets have a look what data each prior grid point would generate:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">alphas_middle</span><span class="p">[::</span><span class="mi">40</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">obs_period</span><span class="p">,</span> <span class="n">generate_luminosity_data</span><span class="p">(</span><span class="n">alpha</span><span class="p">),</span> <span class="s1">&#39;x &#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">alpha=</span><span class="si">%s</span><span class="s1">$&#39;</span> <span class="o">%</span> <span class="n">alpha</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">obs_period</span><span class="p">,</span> <span class="n">obs_luminosity</span><span class="p">,</span> <span class="s1">&#39;o &#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;actual data&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">,</span> <span class="n">prop</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Period [days]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Luminosity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Prior predictive samples&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/1BayesOnGrids_30_0.png" src="_images/1BayesOnGrids_30_0.png" />
+</div>
+</div>
+<p>Lets plot our loglikelihood function:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">loglikelihoods</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">loglikelihood</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">alphas_middle</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alphas_middle</span><span class="p">,</span> <span class="n">loglikelihoods</span><span class="p">,</span> <span class="n">drawstyle</span><span class="o">=</span><span class="s1">&#39;steps-mid&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;log-likelihood&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">alpha$&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/1BayesOnGrids_32_0.png" src="_images/1BayesOnGrids_32_0.png" />
+</div>
+</div>
+<p>The model most frequently making data that looks closest to our observed sample near <span class="math notranslate nohighlight">\(\alpha=-4\)</span>.</p>
+<p>So lets compute the probability distribution:</p>
+<p>First we compute the normalising constant (<strong>evidence</strong>):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># to avoid overflows and underflows, we subtract a constant</span>
+<span class="n">posterior_unnormalised</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">loglikelihoods</span> <span class="o">-</span> <span class="n">loglikelihoods</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="o">*</span> <span class="n">alphas_step</span>
+
+<span class="c1"># the same as above, but in log, which is more stable</span>
+<span class="n">logposterior_unnormalised</span> <span class="o">=</span> <span class="n">loglikelihoods</span> <span class="o">+</span> <span class="n">log</span><span class="p">(</span><span class="n">alphas_step</span><span class="p">)</span>
+
+<span class="c1"># compute log-evidence, add back the constant</span>
+<span class="n">logevidence</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">posterior_unnormalised</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="o">+</span> <span class="n">loglikelihoods</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+<span class="n">logevidence</span><span class="p">,</span> <span class="n">posterior_unnormalised</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">loglikelihoods</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(-10.395592057686736, 0.11442464665918742, -8.227753277270889)
+</pre></div></div>
+</div>
+<p>Verify that it is now a <strong>normalised</strong> posterior probability distribution:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">posterior</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">logposterior_unnormalised</span> <span class="o">-</span> <span class="n">logevidence</span><span class="p">)</span>
+
+<span class="n">posterior</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1.0000000000000004
+</pre></div></div>
+</div>
+<p>Plot the <strong>posterior probability distribution</strong>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alphas_middle</span><span class="p">,</span> <span class="n">posterior</span><span class="p">,</span> <span class="n">drawstyle</span><span class="o">=</span><span class="s1">&#39;steps&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Posterior&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alphas_middle</span><span class="p">,</span> <span class="n">alphas_step</span><span class="p">,</span> <span class="n">drawstyle</span><span class="o">=</span><span class="s1">&#39;steps&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Prior&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Posterior probability density $P(</span><span class="se">\\</span><span class="s2">alpha|D)$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">alpha$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/1BayesOnGrids_39_0.png" src="_images/1BayesOnGrids_39_0.png" />
+</div>
+</div>
+<p>The <strong>information gain</strong> (<a class="reference external" href="https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence">https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence</a>) can be quantified (in bits) as:</p>
+<p><span class="math notranslate nohighlight">\(\int P(\alpha|D)\log_2\frac{P(\alpha|D)}{P(\alpha)}d\alpha\)</span>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+    <span class="n">information_gain_bits</span> <span class="o">=</span> <span class="p">(</span><span class="n">posterior</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">posterior</span> <span class="o">/</span> <span class="n">prior</span><span class="p">))[</span><span class="n">posterior</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Information gain: </span><span class="si">%.1f</span><span class="s1"> bits&#39;</span> <span class="o">%</span> <span class="n">information_gain_bits</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Information gain: 5.7 bits
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[141]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alphas_middle</span><span class="p">[</span><span class="n">posterior</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">],</span> <span class="n">posterior</span><span class="p">[</span><span class="n">posterior</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(),</span> <span class="n">drawstyle</span><span class="o">=</span><span class="s1">&#39;steps&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cumulative posterior probability density $P(&lt;</span><span class="se">\\</span><span class="s2">alpha|D)$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">alpha$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">);</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/1BayesOnGrids_42_0.png" src="_images/1BayesOnGrids_42_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">posterior</span><span class="p">[</span><span class="n">alphas_middle</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">4.4</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+5.581501212469834e-07
+</pre></div></div>
+</div>
+<p>Lets see what the probable models look like:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">alpha_posterior</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">alphas_middle</span><span class="p">,</span> <span class="n">posterior</span><span class="p">):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+      <span class="c1"># predict relation with this alpha</span>
+      <span class="n">grid_P</span><span class="p">,</span> <span class="n">luminosity_model</span><span class="p">(</span><span class="n">grid_P</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="o">=-</span><span class="mi">3</span><span class="p">,</span> <span class="n">metallicity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+      <span class="s1">&#39;x &#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha_posterior</span> <span class="c1"># weigh by their probability</span>
+  <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">obs_period</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">obs_luminosity</span><span class="p">,</span> <span class="n">xerr</span><span class="o">=</span><span class="n">experimental_noise_period</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">experimental_noise_luminosity</span><span class="p">,</span>
+             <span class="n">ls</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid_P</span><span class="p">,</span> <span class="n">luminosity_model</span><span class="p">(</span><span class="n">grid_P</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">true_alpha</span><span class="p">,</span> <span class="n">true_beta</span><span class="p">,</span> <span class="n">true_gamma</span><span class="p">),</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;truth&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">true_period</span><span class="p">,</span> <span class="n">true_luminosity</span><span class="p">,</span> <span class="s1">&#39;x &#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">,</span> <span class="n">prop</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Period [days]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Luminosity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Posterior prediction of the Period-Luminosity relation&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/1BayesOnGrids_45_0.png" src="_images/1BayesOnGrids_45_0.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Note that the posterior models are much narrower than the prior predictions. We learned a lot!</p></li>
+<li><p>The model is near the data, but there may be some scatter additional to what is expected from the error bars.</p></li>
+</ul>
+<div class="section" id="Questions-to-discuss">
+<h2>Questions to discuss<a class="headerlink" href="#Questions-to-discuss" title="Permalink to this headline">¶</a></h2>
+<p>(5 points for contributing something to the discussion!)</p>
+<ul class="simple">
+<li><p>What is the most probable value for <span class="math notranslate nohighlight">\(\alpha\)</span>?</p></li>
+<li><p>MAP: maximum a posteriori : <span class="math notranslate nohighlight">\(\alpha_{MAP} = argmax(posterior)\)</span></p></li>
+<li><p>In which interval is 90% of the posterior probability is contained? Is this credible interval uniquely defined?</p></li>
+<li><p>What is the probability that <span class="math notranslate nohighlight">\(\alpha&lt;-4.4\)</span>?</p></li>
+<li><p>How did the prior (uniform grid) influence the posterior here? What would happen if we had parameterized our model with parameter <span class="math notranslate nohighlight">\(\alpha' = \log(-\alpha)\)</span> instead and used a flat uniform prior on <span class="math notranslate nohighlight">\(\alpha'\)</span> instead?</p>
+<ul>
+<li><p>How would the posterior probability density change? In which region is more probability mass placed?</p></li>
+</ul>
+</li>
+<li><p>Lets say we manually adjust our prior to be very close to the posterior, for example <span class="math notranslate nohighlight">\(\alpha\)</span>~Uniform(-4.5,-4.2).</p>
+<ul>
+<li><p>Would the prior predictive checks be more diverse or less diverse?</p></li>
+<li><p>Would the typical likelihood values become higher or lower?</p></li>
+<li><p>How would the posterior probability density normalisation – the evidence (marginalised/averaged likelihood) – change? Would it increase or decrease?</p></li>
+<li><p>Do the likelihood function values change if we change the prior?</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="Take-aways">
+<h2>Take-aways<a class="headerlink" href="#Take-aways" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Priors are always there when inferring probability distributions. Sometimes they are implicit via the chosen parameterization of the space.</p></li>
+<li><p>Probabilistic generative models tell a complete story of the physical process of interest and the measurement process.</p></li>
+<li><p>Posterior probabilities represent our state of information after data were taken.</p></li>
+<li><p>The Bayesian evidence punishes prediction diversity. Bayes factors and posterior odds ratios are one kind of model comparison.</p></li>
+<li><p>For problems with several parameters, we need to go beyond grids.</p></li>
+</ul>
+<p>–&gt; Next: How to compute posterior probability distributions and the evidence with Monte Carlo methods.</p>
+</div>
+<div class="section" id="The-curse-of-dimensionality">
+<h2>The curse of dimensionality<a class="headerlink" href="#The-curse-of-dimensionality" title="Permalink to this headline">¶</a></h2>
+<p>In our model, we made quite a few assumptions, fixing parameters:</p>
+<ul class="simple">
+<li><p>we assumed <span class="math notranslate nohighlight">\(\beta=-3\)</span></p></li>
+<li><p>we assumed <span class="math notranslate nohighlight">\(\sigma_P=0\)</span></p></li>
+<li><p>we assumed <span class="math notranslate nohighlight">\(\gamma=0\)</span> and no systematic scatter about our law.</p></li>
+<li><p>If we extend our model to explore other parameters (such as <span class="math notranslate nohighlight">\(\beta\)</span>), how does the number of grid points (and thus the number of likelihood evaluations we need to perform) scale with parameters?</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="2d-grid">
+<h1>2d grid<a class="headerlink" href="#2d-grid" title="Permalink to this headline">¶</a></h1>
+<p>Lets make a grid in two dimensions (over <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[147]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">betas_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">N_grid</span> <span class="o">//</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">betas_middle</span> <span class="o">=</span> <span class="p">(</span><span class="n">betas_grid</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">betas_grid</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">betas_step</span> <span class="o">=</span> <span class="n">betas_grid</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">betas_grid</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">alphas_middle</span><span class="p">,</span> <span class="n">betas_middle</span><span class="p">)</span>
+<span class="n">grid_cellsize</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">alphas_step</span><span class="p">,</span> <span class="n">betas_step</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">grid_cellsize</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(39, 400) (39, 400) (39, 400)
+</pre></div></div>
+</div>
+<p>Evaluate the likelihood and get the 2d normalised posterior probability distribution:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[148]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+
+<span></span><span class="n">grid_unnormalised_logposterior</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">loglikelihood</span><span class="p">)(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">grid_cellsize</span><span class="p">)</span>
+<span class="n">grid_unnormalised_posterior</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">grid_unnormalised_logposterior</span><span class="p">)</span>
+<span class="n">grid_logevidence</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">grid_unnormalised_posterior</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="n">grid_posterior</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">grid_unnormalised_logposterior</span> <span class="o">-</span> <span class="n">grid_logevidence</span><span class="p">)</span>
+
+<span class="n">grid_posterior</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[148]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.9999999999999999
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[149]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+      <span class="n">grid_posterior</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+      <span class="n">extent</span><span class="o">=</span><span class="p">(</span><span class="n">alphas_middle</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">alphas_middle</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">betas_middle</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">betas_middle</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
+      <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray_r&#39;</span><span class="p">)</span>
+<span class="c1">#plt.colorbar(label=&#39;log-likelihood&#39;)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">alpha$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">beta$&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alphas_middle</span><span class="p">,</span> <span class="n">grid_posterior</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">alpha$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid_posterior</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">betas_middle</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">beta$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Marginal and conditional probability distributions&quot;</span><span class="p">);</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/1BayesOnGrids_54_0.png" src="_images/1BayesOnGrids_54_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Bayesian-model-comparison">
+<h1>Bayesian model comparison<a class="headerlink" href="#Bayesian-model-comparison" title="Permalink to this headline">¶</a></h1>
+<p>We marginalised the likelihoods to model evidences: <span class="math notranslate nohighlight">\(Z_1=P(D|M_1)\)</span>, <span class="math notranslate nohighlight">\(Z_2=P(D|M_2)\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[150]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;log10(Z) of 1d model (beta fixed ): </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">logevidence</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;log10(Z) of 2d model (beta varies): </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">grid_logevidence</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+log10(Z) of 1d model (beta fixed ): -10.40
+log10(Z) of 2d model (beta varies): -9.61
+</pre></div></div>
+</div>
+<p>These can be used to compute relative probabilities of <strong>models</strong>, by applying Bayes’ theorem once again:</p>
+<p><span class="math notranslate nohighlight">\(P(M_1|D) = \frac{P(D|M_1) * P(M_1)}{\sum_i P(D|M_i) * P(M_i)}\)</span></p>
+<p>For this step, we first need to define prior model probabilities <span class="math notranslate nohighlight">\(P(M_i)\)</span> for each model.</p>
+<p>If we assume a 1:100 odds ratio, this is:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[151]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">prior_odds</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">model_prior_1d</span> <span class="o">=</span> <span class="n">prior_odds</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">prior_odds</span><span class="p">)</span>
+<span class="n">model_prior_2d</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">prior_odds</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Prior probability P(1dmodel) = </span><span class="si">%2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prior_odds</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">prior_odds</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Prior probability P(2dmodel) = </span><span class="si">%2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">prior_odds</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Prior probability P(1dmodel) = 0.009901
+Prior probability P(2dmodel) = 0.990099
+</pre></div></div>
+</div>
+<p>Posterior model probabilities <span class="math notranslate nohighlight">\(P(M_i|D)\)</span> give the relative probability of one model being the right one:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[152]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Posterior model probability P(1dmodel|D) = </span><span class="si">%2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">logevidence</span><span class="p">)</span> <span class="o">*</span> <span class="n">prior_odds</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">logevidence</span><span class="p">)</span> <span class="o">*</span> <span class="n">prior_odds</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">grid_logevidence</span><span class="p">))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Posterior model probability P(2dmodel|D) = </span><span class="si">%2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">grid_logevidence</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">logevidence</span><span class="p">)</span> <span class="o">*</span> <span class="n">prior_odds</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">grid_logevidence</span><span class="p">))))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Posterior model probability P(1dmodel|D) = 0.004557
+Posterior model probability P(2dmodel|D) = 0.995443
+</pre></div></div>
+</div>
+<p>A quantification of how much the odds have shifted is the <strong>Bayes factor</strong>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[153]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">bayes_factor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">logevidence</span> <span class="o">-</span> <span class="n">grid_logevidence</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bayes factor: P(D|1dmodel)/P(D|2dmodel) = </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">bayes_factor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Bayes factor: P(D|1dmodel)/P(D|2dmodel) = 0.46
+</pre></div></div>
+</div>
+<p>If the Bayes factor is close to 1, there is “not much evidence” in favor of one or the other model.</p>
+<p>Recall that model evidences (marginal likelihoods) are likelihoods averaged over the entire parameter space.</p>
+<p>Benefits:</p>
+<ol class="arabic simple">
+<li><p>Bayes factors capture the entire model parameter space, not just the “best fit”.</p></li>
+<li><p>Bayes factors punish model diversity (“built-in Occam’s razor”)</p></li>
+</ol>
+<p>Limitations:</p>
+<ol class="arabic simple" start="3">
+<li><p>Dependence on priors: Because of (1), the results strongly depend on the parameter priors. They also strongly depend on the chosen prior model probabilities, which need to be chosen.</p>
+<ul class="simple">
+<li><p>This means posterior odds can be meaningful and appropriate for competing physical models where these priors can be specified.</p></li>
+<li><p>For ad-hoc/empirical models, they are almost never useful –&gt; see model comparison lecture later.</p></li>
+</ul>
+</li>
+<li><p>Bayesian inference assumes that the true hypothesis is within the specified model and parameter set (“Closed world assumption”, “M-closed”). This applies to parameter estimation and model comparison.</p></li>
+<li><p>Bayesian inference does not make decisions. It only weighs probabilities. Posterior odds do not state the probability of making a false decision. For this, a frequentist characterisation of imposing a threshold is needed, based on simulations!</p></li>
+</ol>
+<div class="section" id="Ticket-to-leave">
+<h2>Ticket to leave<a class="headerlink" href="#Ticket-to-leave" title="Permalink to this headline">¶</a></h2>
+<p>Fill out the <a class="reference external" href="https://indico.ph.tum.de/event/6875/surveys/5">form below</a> and then you can leave the class. (+5 points)</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%html</span>
+
+<span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://indico.ph.tum.de/event/6875/surveys/5&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;width: 100%; height: 400px&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<iframe src="https://indico.ph.tum.de/event/6875/surveys/5" style="width: 100%; height: 400px"></iframe></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Johannes Buchner, Francesca Capel
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

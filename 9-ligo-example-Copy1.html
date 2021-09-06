@@ -1,0 +1,1033 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>LIGO Gravitational Wave Analysis &mdash; MCI-course 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+  
+  
+    <link rel="canonical" href="https://johannesbuchner.github.io/UltraNest/9-ligo-example-Copy1.html"/>
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> MCI-course
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="preliminaries.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BooksAndPapers.html">Reading material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BooksAndPapers.html#Papers-for-Advanced-Methods">Papers for Advanced Methods</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MCI-course</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>LIGO Gravitational Wave Analysis</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="LIGO-Gravitational-Wave-Analysis">
+<h1>LIGO Gravitational Wave Analysis<a class="headerlink" href="#LIGO-Gravitational-Wave-Analysis" title="Permalink to this headline">¶</a></h1>
+<p>Based on pycbc examples:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pycbc.org/pycbc/latest/html/inference.html">https://pycbc.org/pycbc/latest/html/inference.html</a></p></li>
+<li><p><a class="reference external" href="https://github.com/gwastro/PyCBC-Tutorials/blob/master/tutorial/inference_0_Overview.ipynb">https://github.com/gwastro/PyCBC-Tutorials/blob/master/tutorial/inference_0_Overview.ipynb</a></p></li>
+<li><p><a class="reference external" href="https://github.com/gwastro/PyCBC-Tutorials/">https://github.com/gwastro/PyCBC-Tutorials/</a></p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>pip install pycbc
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+/usr/lib/python3/dist-packages/secretstorage/dhcrypto.py:15: CryptographyDeprecationWarning: int_from_bytes is deprecated, use int.from_bytes instead
+  from cryptography.utils import int_from_bytes
+/usr/lib/python3/dist-packages/secretstorage/util.py:19: CryptographyDeprecationWarning: int_from_bytes is deprecated, use int.from_bytes instead
+  from cryptography.utils import int_from_bytes
+Requirement already satisfied: pycbc in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (1.18.1)
+Requirement already satisfied: mpld3&gt;=0.3 in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (from pycbc) (0.5.5)
+Requirement already satisfied: six&gt;=1.10.0 in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (from pycbc) (1.15.0)
+Requirement already satisfied: matplotlib&gt;=1.5.1 in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (from pycbc) (3.4.2)
+Requirement already satisfied: gwdatafind in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (from pycbc) (1.0.4)
+Requirement already satisfied: Mako&gt;=1.0.1 in /usr/lib/python3/dist-packages (from pycbc) (1.1.0)
+Requirement already satisfied: h5py&gt;=2.5; python_version &gt; &#34;3.6&#34; in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (from pycbc) (3.1.0)
+Requirement already satisfied: pillow in /usr/lib/python3/dist-packages (from pycbc) (7.0.0)
+Requirement already satisfied: lscsoft-glue&gt;=1.59.3 in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (from pycbc) (2.0.0)
+Requirement already satisfied: numpy&gt;=1.16.0 in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (from pycbc) (1.19.2)
+Requirement already satisfied: tqdm in /usr/lib/python3/dist-packages (from pycbc) (4.30.0)
+Requirement already satisfied: lalsuite in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (from pycbc) (7.0)
+Requirement already satisfied: cython&gt;=0.29 in /usr/lib/python3/dist-packages (from pycbc) (0.29.14)
+Requirement already satisfied: decorator&gt;=3.4.2 in /usr/lib/python3/dist-packages (from pycbc) (4.4.2)
+Requirement already satisfied: ligo-segments in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (from pycbc) (1.3.0)
+Requirement already satisfied: scipy&gt;=0.16.0; python_version &gt;= &#34;3.5&#34; in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (from pycbc) (1.7.0)
+Requirement already satisfied: astropy!=4.0.5,!=4.2.1,&gt;=2.0.3; python_version &gt; &#34;3.0&#34; in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (from pycbc) (4.1)
+Requirement already satisfied: requests&gt;=1.2.1 in /usr/lib/python3/dist-packages (from pycbc) (2.22.0)
+Requirement already satisfied: jinja2 in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (from pycbc) (2.11.2)
+Requirement already satisfied: beautifulsoup4&gt;=4.6.0 in /usr/lib/python3/dist-packages (from pycbc) (4.8.2)
+Requirement already satisfied: pyparsing&gt;=2.2.1 in /usr/lib/python3/dist-packages (from matplotlib&gt;=1.5.1-&gt;pycbc) (2.4.6)
+Requirement already satisfied: python-dateutil&gt;=2.7 in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (from matplotlib&gt;=1.5.1-&gt;pycbc) (2.8.1)
+Requirement already satisfied: kiwisolver&gt;=1.0.1 in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (from matplotlib&gt;=1.5.1-&gt;pycbc) (1.2.0)
+Requirement already satisfied: cycler&gt;=0.10 in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (from matplotlib&gt;=1.5.1-&gt;pycbc) (0.10.0)
+Requirement already satisfied: pyOpenSSL in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (from gwdatafind-&gt;pycbc) (20.0.1)
+Requirement already satisfied: MarkupSafe&gt;=0.23 in /usr/lib/python3/dist-packages (from jinja2-&gt;pycbc) (1.1.0)
+Requirement already satisfied: cryptography&gt;=3.2 in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (from pyOpenSSL-&gt;gwdatafind-&gt;pycbc) (3.4.7)
+Requirement already satisfied: cffi&gt;=1.12 in /usr/lib/python3/dist-packages (from cryptography&gt;=3.2-&gt;pyOpenSSL-&gt;gwdatafind-&gt;pycbc) (1.14.0)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>pip3 uninstall -y emcee
+<span class="o">!</span>pip3 install <span class="nv">emcee</span><span class="o">==</span><span class="m">2</span>.2.0
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+/usr/lib/python3/dist-packages/secretstorage/dhcrypto.py:15: CryptographyDeprecationWarning: int_from_bytes is deprecated, use int.from_bytes instead
+  from cryptography.utils import int_from_bytes
+/usr/lib/python3/dist-packages/secretstorage/util.py:19: CryptographyDeprecationWarning: int_from_bytes is deprecated, use int.from_bytes instead
+  from cryptography.utils import int_from_bytes
+Found existing installation: emcee 3.1.0
+Uninstalling emcee-3.1.0:
+  Successfully uninstalled emcee-3.1.0
+/usr/lib/python3/dist-packages/secretstorage/dhcrypto.py:15: CryptographyDeprecationWarning: int_from_bytes is deprecated, use int.from_bytes instead
+  from cryptography.utils import int_from_bytes
+/usr/lib/python3/dist-packages/secretstorage/util.py:19: CryptographyDeprecationWarning: int_from_bytes is deprecated, use int.from_bytes instead
+  from cryptography.utils import int_from_bytes
+Collecting emcee==2.2.0
+  Downloading emcee-2.2.0.tar.gz (24 kB)
+Requirement already satisfied: numpy in /mnt/data/daten/PostDoc2/home/.local/lib/python3.8/site-packages (from emcee==2.2.0) (1.19.2)
+Building wheels for collected packages: emcee
+  Building wheel for emcee (setup.py) ... done
+  Created wheel for emcee: filename=emcee-2.2.0-py3-none-any.whl size=29250 sha256=d4b4e7dde9d448e563cff0bd66e382efa086bea50a8746ed7ef09434ff42ada7
+  Stored in directory: /mnt/data/daten/PostDoc2/home/.cache/pip/wheels/1f/bd/4f/dc67dd006d0065d523da42f802d71d4308ad240d7a0d06126b
+Successfully built emcee
+<span class="ansi-red-fg">ERROR: threeml 2.0.2 has requirement emcee&gt;=3, but you&#39;ll have emcee 2.2.0 which is incompatible.</span>
+Installing collected packages: emcee
+Successfully installed emcee-2.2.0
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pycbc.catalog</span> <span class="kn">import</span> <span class="n">Merger</span>
+<span class="kn">from</span> <span class="nn">pycbc.psd</span> <span class="kn">import</span> <span class="n">interpolate</span><span class="p">,</span> <span class="n">inverse_spectrum_truncation</span>
+<span class="kn">from</span> <span class="nn">pycbc.frame</span> <span class="kn">import</span> <span class="n">read_frame</span>
+<span class="kn">from</span> <span class="nn">pycbc.filter</span> <span class="kn">import</span> <span class="n">highpass</span><span class="p">,</span> <span class="n">resample_to_delta_t</span>
+<span class="kn">from</span> <span class="nn">astropy.utils.data</span> <span class="kn">import</span> <span class="n">download_file</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">Merger</span><span class="p">(</span><span class="s2">&quot;GW150914&quot;</span><span class="p">)</span>
+
+<span class="c1"># List of observatories we&#39;ll analyze</span>
+<span class="n">ifos</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;H1&#39;</span><span class="p">,</span>
+        <span class="c1">#&#39;V1&#39;,</span>
+        <span class="s1">&#39;L1&#39;</span><span class="p">,</span>
+       <span class="p">]</span>
+
+<span class="c1"># The single template waveform model needs these data products</span>
+<span class="n">psds</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="n">ifos</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Processing </span><span class="si">{}</span><span class="s2"> data&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ifo</span><span class="p">))</span>
+
+    <span class="c1"># Download the gravitational wave data for GW170817</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://dcc.ligo.org/public/0146/P1700349/001/</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">1_LOSC_CLN_4_V1-1187007040-2048.gwf&quot;</span>
+    <span class="n">fname</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ifo</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ifo</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Read the gravitational wave data and do some minimal</span>
+    <span class="c1"># conditioning of the data.</span>
+    <span class="n">ts</span> <span class="o">=</span> <span class="n">read_frame</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:LOSC-STRAIN&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ifo</span><span class="p">),</span>
+                    <span class="n">start_time</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">time</span> <span class="o">-</span> <span class="mi">260</span><span class="p">),</span>
+                    <span class="n">end_time</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">time</span> <span class="o">+</span> <span class="mi">40</span><span class="p">))</span>
+    <span class="n">ts</span> <span class="o">=</span> <span class="n">highpass</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="mf">15.0</span><span class="p">)</span>                     <span class="c1"># Remove low frequency content</span>
+    <span class="n">ts</span> <span class="o">=</span> <span class="n">resample_to_delta_t</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="mf">1.0</span><span class="o">/</span><span class="mi">2048</span><span class="p">)</span>      <span class="c1"># Resample data to 2048 Hz</span>
+    <span class="n">ts</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">time_slice</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">time</span><span class="o">-</span><span class="mi">112</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">time</span> <span class="o">+</span> <span class="mi">16</span><span class="p">)</span> <span class="c1"># Limit to times around the signal</span>
+    <span class="n">data</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">to_frequencyseries</span><span class="p">()</span>         <span class="c1"># Convert to a frequency series by taking the data&#39;s FFT</span>
+
+    <span class="c1"># Estimate the power spectral density of the data</span>
+    <span class="n">psd</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">psd</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">ts</span><span class="o">.</span><span class="n">delta_f</span><span class="p">)</span>
+    <span class="n">psd</span> <span class="o">=</span> <span class="n">inverse_spectrum_truncation</span><span class="p">(</span><span class="n">psd</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">psd</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">),</span>
+                                      <span class="n">trunc_method</span><span class="o">=</span><span class="s1">&#39;hann&#39;</span><span class="p">,</span>
+                                      <span class="n">low_frequency_cutoff</span><span class="o">=</span><span class="mf">20.0</span><span class="p">)</span>
+    <span class="n">psds</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span> <span class="o">=</span> <span class="n">psd</span>
+
+
+
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Processing H1 data
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">RuntimeError</span>                              Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-1-b72b1fb390fa&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">     26</span>     <span class="ansi-red-fg"># Read the gravitational wave data and do some minimal</span>
+<span class="ansi-green-intense-fg ansi-bold">     27</span>     <span class="ansi-red-fg"># conditioning of the data.</span>
+<span class="ansi-green-fg">---&gt; 28</span><span class="ansi-red-fg">     ts = read_frame(fname, &#34;{}:LOSC-STRAIN&#34;.format(ifo),
+</span><span class="ansi-green-intense-fg ansi-bold">     29</span>                     start_time<span class="ansi-blue-fg">=</span>int<span class="ansi-blue-fg">(</span>m<span class="ansi-blue-fg">.</span>time <span class="ansi-blue-fg">-</span> <span class="ansi-cyan-fg">260</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">     30</span>                     end_time=int(m.time + 40))
+
+<span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/pycbc/frame/frame.py</span> in <span class="ansi-cyan-fg">read_frame</span><span class="ansi-blue-fg">(location, channels, start_time, end_time, duration, check_integrity, sieve)</span>
+<span class="ansi-green-intense-fg ansi-bold">    201</span>                        None, None, None)
+<span class="ansi-green-intense-fg ansi-bold">    202</span>
+<span class="ansi-green-fg">--&gt; 203</span><span class="ansi-red-fg">     </span>stream <span class="ansi-blue-fg">=</span> lalframe<span class="ansi-blue-fg">.</span>FrStreamCacheOpen<span class="ansi-blue-fg">(</span>cum_cache<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    204</span>     stream<span class="ansi-blue-fg">.</span>mode <span class="ansi-blue-fg">=</span> lalframe<span class="ansi-blue-fg">.</span>FR_STREAM_VERBOSE_MODE
+<span class="ansi-green-intense-fg ansi-bold">    205</span>
+
+<span class="ansi-red-fg">RuntimeError</span>: Internal function call failed: Invalid argument
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;H1&#39;: &lt;pycbc.types.frequencyseries.FrequencySeries at 0x7f80fa8ebe80&gt;,
+ &#39;V1&#39;: &lt;pycbc.types.frequencyseries.FrequencySeries at 0x7f80fa881ac0&gt;,
+ &#39;L1&#39;: &lt;pycbc.types.frequencyseries.FrequencySeries at 0x7f80fa881bb0&gt;}
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[73]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pycbc.inference</span> <span class="kn">import</span> <span class="n">models</span><span class="p">,</span> <span class="n">sampler</span>
+<span class="kn">from</span> <span class="nn">pycbc.distributions</span> <span class="kn">import</span> <span class="n">Uniform</span><span class="p">,</span> <span class="n">JointDistribution</span><span class="p">,</span> <span class="n">UniformAngle</span><span class="p">,</span> <span class="n">SinAngle</span><span class="p">,</span> <span class="n">CosAngle</span><span class="p">,</span> <span class="n">UniformLog10</span>
+
+<span class="n">static</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;f_lower&#39;</span><span class="p">:</span><span class="mf">25.0</span><span class="p">,</span>
+          <span class="s1">&#39;approximant&#39;</span><span class="p">:</span><span class="s2">&quot;TaylorF2&quot;</span><span class="p">,</span>
+          <span class="s1">&#39;f_final&#39;</span><span class="p">:</span><span class="mi">500</span><span class="p">,</span>
+          <span class="s1">&#39;polarization&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+         <span class="p">}</span>
+
+<span class="c1"># parameters:</span>
+<span class="n">variable</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s1">&#39;tc&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ra&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;dec&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;distance&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;mchirp&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;q&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;inclination&#39;</span><span class="p">,</span>
+    <span class="c1">#&#39;polarization&#39;,</span>
+<span class="p">)</span>
+
+<span class="c1"># prior distribution:</span>
+<span class="n">prior</span> <span class="o">=</span> <span class="n">JointDistribution</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span>
+    <span class="n">SinAngle</span><span class="p">(</span><span class="n">inclination</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+    <span class="n">UniformAngle</span><span class="p">(</span><span class="n">ra</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+    <span class="n">UniformLog10</span><span class="p">(</span><span class="n">mchirp</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">q</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">10.</span><span class="p">)),</span>
+    <span class="n">CosAngle</span><span class="p">(</span><span class="n">dec</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+    <span class="n">Uniform</span><span class="p">(</span>
+        <span class="n">distance</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+        <span class="n">tc</span><span class="o">=</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">time</span><span class="o">+.</span><span class="mi">02</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">time</span><span class="o">+</span><span class="mf">0.05</span><span class="p">),</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">pycbc.transforms</span> <span class="kn">import</span> <span class="n">MchirpQToMass1Mass2</span>
+
+<span class="c1"># use only some of the data (without Virgo):</span>
+<span class="n">partial_data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="c1">#del partial_data[&#39;V1&#39;]</span>
+
+<span class="c1"># which model to fit to the data</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">MarginalizedPhaseGaussianNoise</span><span class="p">(</span>
+    <span class="n">variable</span><span class="p">,</span>
+    <span class="n">partial_data</span><span class="p">,</span>
+    <span class="n">low_frequency_cutoff</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;H1&#39;</span><span class="p">:</span><span class="mi">25</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">:</span><span class="mi">25</span><span class="p">,</span> <span class="s1">&#39;V1&#39;</span><span class="p">:</span><span class="mi">25</span><span class="p">},</span>
+    <span class="n">high_frequency_cutoff</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;H1&#39;</span><span class="p">:</span><span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">:</span><span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;V1&#39;</span><span class="p">:</span><span class="mi">500</span><span class="p">},</span>
+    <span class="n">psds</span> <span class="o">=</span> <span class="n">psds</span><span class="p">,</span>
+    <span class="n">static_params</span> <span class="o">=</span> <span class="n">static</span><span class="p">,</span>
+    <span class="n">prior</span> <span class="o">=</span> <span class="n">prior</span><span class="p">,</span>
+    <span class="n">waveform_transforms</span> <span class="o">=</span> <span class="p">[</span><span class="n">MchirpQToMass1Mass2</span><span class="p">()]</span>
+<span class="p">)</span>
+
+
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[74]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pycbc.inference.sampler.emcee</span> <span class="kn">import</span> <span class="n">EmceeEnsembleSampler</span>
+<span class="kn">from</span> <span class="nn">pycbc.inference.sampler</span> <span class="kn">import</span> <span class="n">UltranestSampler</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">smpl</span> <span class="o">=</span> <span class="n">EmceeEnsembleSampler</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="n">nprocesses</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">smpl</span><span class="o">.</span><span class="n">set_p0</span><span class="p">()</span> <span class="c1"># If we don&#39;t set p0, it will use the models prior to draw initial points!</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[76]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">smpl</span><span class="o">.</span><span class="n">clear_samples</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[77]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Note it may take ~1-3 minutes for this to run</span>
+<span class="n">smpl</span><span class="o">.</span><span class="n">run_mcmc</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[78]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">smpl</span><span class="o">.</span><span class="n">sampling_params</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[78]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&#39;tc&#39;, &#39;ra&#39;, &#39;dec&#39;, &#39;distance&#39;, &#39;mchirp&#39;, &#39;q&#39;, &#39;inclination&#39;)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[79]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">smpl</span><span class="o">.</span><span class="n">samples</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[79]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;tc&#39;: array([[1.18700888e+09, 1.18700888e+09, 1.18700888e+09, ...,
+         1.18700888e+09, 1.18700888e+09, 1.18700888e+09],
+        [1.18700888e+09, 1.18700888e+09, 1.18700888e+09, ...,
+         1.18700888e+09, 1.18700888e+09, 1.18700888e+09],
+        [1.18700888e+09, 1.18700888e+09, 1.18700888e+09, ...,
+         1.18700888e+09, 1.18700888e+09, 1.18700888e+09],
+        ...,
+        [1.18700888e+09, 1.18700888e+09, 1.18700888e+09, ...,
+         1.18700888e+09, 1.18700888e+09, 1.18700888e+09],
+        [1.18700888e+09, 1.18700888e+09, 1.18700888e+09, ...,
+         1.18700888e+09, 1.18700888e+09, 1.18700888e+09],
+        [1.18700888e+09, 1.18700888e+09, 1.18700888e+09, ...,
+         1.18700888e+09, 1.18700888e+09, 1.18700888e+09]]),
+ &#39;ra&#39;: array([[1.81707336, 1.81707336, 1.71627293, ..., 1.28539824, 1.28539824,
+         1.28539824],
+        [3.57669527, 3.57669527, 3.57669527, ..., 3.57417708, 3.57417708,
+         3.57417708],
+        [2.81414213, 2.81414213, 2.81414213, ..., 2.00349451, 2.00349451,
+         2.00349451],
+        ...,
+        [1.28984229, 1.28984229, 1.28984229, ..., 1.28892392, 1.28892392,
+         1.28892392],
+        [1.00341597, 1.00341597, 1.00341597, ..., 1.43249976, 1.43249976,
+         1.43249976],
+        [1.64061766, 1.64061766, 1.64061766, ..., 0.18086899, 0.18086899,
+         0.18086899]]),
+ &#39;dec&#39;: array([[-0.90788938, -0.90788938, -1.04018486, ..., -1.08543914,
+         -1.08543914, -1.08543914],
+        [-0.94479714, -0.94479714, -0.94479714, ...,  0.37425862,
+          0.37425862,  0.37425862],
+        [-0.47213463, -0.47213463, -0.47213463, ..., -0.07897922,
+         -0.07897922, -0.07897922],
+        ...,
+        [-0.40246567, -0.40246567, -0.40246567, ..., -0.40244847,
+         -0.40244847, -0.40244847],
+        [ 0.32649001,  0.32649001,  0.32649001, ...,  0.34082345,
+          0.34082345,  0.34082345],
+        [ 0.21845655,  0.21845655,  0.21845655, ...,  0.3692782 ,
+          0.3692782 ,  0.3692782 ]]),
+ &#39;distance&#39;: array([[82.39883803, 82.39883803, 87.75643641, ..., 83.27174722,
+         83.27174722, 83.27174722],
+        [42.53160941, 42.53160941, 42.53160941, ..., 93.08742577,
+         93.08742577, 93.08742577],
+        [55.10638747, 55.10638747, 55.10638747, ..., 57.93061405,
+         57.93061405, 57.93061405],
+        ...,
+        [78.1741685 , 78.1741685 , 78.1741685 , ..., 78.20407805,
+         78.20407805, 78.20407805],
+        [74.44302139, 74.44302139, 74.44302139, ..., 72.06976793,
+         72.06976793, 72.06976793],
+        [71.30558594, 71.30558594, 71.30558594, ..., 81.00432443,
+         81.00432443, 81.00432443]]),
+ &#39;mchirp&#39;: array([[0.40354768, 0.40354768, 0.25363314, ..., 0.33424701, 0.33424701,
+         0.33424701],
+        [0.11568959, 0.11568959, 0.11568959, ..., 1.08010554, 1.08010554,
+         1.08010554],
+        [1.18858262, 1.18858262, 1.18858262, ..., 1.18445674, 1.18445674,
+         1.18445674],
+        ...,
+        [1.19367309, 1.19367309, 1.19367309, ..., 1.19367524, 1.19367524,
+         1.19367524],
+        [1.19795569, 1.19795569, 1.19795569, ..., 1.19700776, 1.19700776,
+         1.19700776],
+        [0.26598927, 0.26598927, 0.26598927, ..., 0.17800112, 0.17800112,
+         0.17800112]]),
+ &#39;q&#39;: array([[0.47794398, 0.47794398, 0.3724151 , ..., 0.4983969 , 0.4983969 ,
+         0.4983969 ],
+        [1.12924545, 1.12924545, 1.12924545, ..., 4.9142283 , 4.9142283 ,
+         4.9142283 ],
+        [0.66304268, 0.66304268, 0.66304268, ..., 0.21107114, 0.21107114,
+         0.21107114],
+        ...,
+        [2.99394592, 2.99394592, 2.99394592, ..., 2.99419764, 2.99419764,
+         2.99419764],
+        [1.80186093, 1.80186093, 1.80186093, ..., 2.184579  , 2.184579  ,
+         2.184579  ],
+        [2.60230076, 2.60230076, 2.60230076, ..., 2.44509045, 2.44509045,
+         2.44509045]]),
+ &#39;inclination&#39;: array([[1.55195321, 1.55195321, 1.58612788, ..., 1.49649703, 1.49649703,
+         1.49649703],
+        [1.6701056 , 1.6701056 , 1.6701056 , ..., 1.32437408, 1.32437408,
+         1.32437408],
+        [1.46831577, 1.46831577, 1.46831577, ..., 1.26108913, 1.26108913,
+         1.26108913],
+        ...,
+        [1.61614636, 1.61614636, 1.61614636, ..., 1.61659678, 1.61659678,
+         1.61659678],
+        [1.28411504, 1.28411504, 1.28411504, ..., 1.44121064, 1.44121064,
+         1.44121064],
+        [2.13760121, 2.13760121, 2.13760121, ..., 2.68539304, 2.68539304,
+         2.68539304]])}
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[80]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[81]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">flat_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="n">smpl</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">smpl</span><span class="o">.</span><span class="n">sampling_params</span><span class="p">])</span>
+<span class="n">flat_samples</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[81]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(40000, 7)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[82]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">corner</span>
+<span class="n">corner</span><span class="o">.</span><span class="n">corner</span><span class="p">(</span><span class="n">flat_samples</span><span class="p">[</span><span class="mi">10000</span><span class="p">:,:],</span> <span class="n">labels</span><span class="o">=</span><span class="n">smpl</span><span class="o">.</span><span class="n">sampling_params</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/9-ligo-example-Copy1_15_0.png" src="_images/9-ligo-example-Copy1_15_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[83]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">#from pycbc.inference.sampler import DynestySampler</span>
+<span class="c1">#sampler = DynestySampler(model, nlive=400)</span>
+<span class="c1">#sampler.run()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[84]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">UltranestSampler</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">log_dir</span><span class="o">=</span><span class="s1">&#39;LIGOfull8&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[ultranest] Sampling 400 live points from prior ...
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "d0f71ec29f61454db70f63572cf943e8", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Z=-207394.8(0.00%) | Like=-207390.10..-207255.69 [-207390.1413..-207389.2100] | it/evals=2517/67873 eff=3.7304% N=400
+</pre></div></div>
+</div>
+<div class="section" id="Exercise-1:-MCMC">
+<h2>Exercise 1: MCMC<a class="headerlink" href="#Exercise-1:-MCMC" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Run MCMC for a number of iterations.</p></li>
+<li><p>Plot the posterior distribution (with getdist or corner or arviz).</p></li>
+<li><p>You constrained the position of this event on the sky (RA, Dec). Compute error bars. Show a picture of that part of the sky with the error ellipse</p>
+<ul>
+<li><p>(You can use <a class="reference external" href="https://github.com/cds-astro/ipyaladin">https://github.com/cds-astro/ipyaladin</a> or show a image or include a html/script via %%html).</p></li>
+</ul>
+</li>
+<li><p>use the methods learned earlier to investigate whether the chain has converged</p></li>
+</ul>
+</div>
+<div class="section" id="Exercise-2:-Nested-Sampling">
+<h2>Exercise 2: Nested Sampling<a class="headerlink" href="#Exercise-2:-Nested-Sampling" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Run the UltranestSampler <code class="docutils literal notranslate"><span class="pre">UltranestSampler(model,</span> <span class="pre">log_dir='my-results-directory',</span> <span class="pre">stepsampling=True)</span></code>. If it is slow, run with MPI (<code class="docutils literal notranslate"><span class="pre">mpiexec</span> <span class="pre">-np</span> <span class="pre">8</span> <span class="pre">python3</span> <span class="pre">myscript.py</span></code>).</p></li>
+<li><p>Plot the posterior distributions (with getdist or corner or arviz).</p></li>
+<li><p>Compute the information gain for each parameter compared to the prior.</p></li>
+<li><p>vary the data sets, by only using one or two of the LIGO/VIRGO detectors: What constraints can be obtained then?</p></li>
+</ul>
+</div>
+<div class="section" id="Homework:-Compare-at-least-two-samplers">
+<h2>Homework: Compare at least two samplers<a class="headerlink" href="#Homework:-Compare-at-least-two-samplers" title="Permalink to this headline">¶</a></h2>
+<p>Select a inference problem.</p>
+<p>You can either a) Use the LIGO problem above or b) choose your own problem. In that case, use a simplified version.</p>
+<p>Implement inference with two of the three techniques (Importance Sampling, MCMC, Nested Sampling) and run them until convergence. You can use your own implementations, but include at least one modern sampler (for example: ultranest, dynesty, multinest, zeus, emcee, autoemcee, snowline).</p>
+<ul class="simple">
+<li><p>Compare their performance qualitatively: ease of use, correctness of the result</p></li>
+<li><p>Compare their performance quantitatively: number of effective samples per wall-clock time</p></li>
+<li><p>Make at least one variation of a sampler tuning parameter (number of walkers).</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Johannes Buchner, Francesca Capel
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
