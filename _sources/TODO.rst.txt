@@ -20,6 +20,8 @@ Breakout rooms automatically
 Names in Zoom
 
 
+Asking questions: helping others
+
 
 --------------------------
 
@@ -97,6 +99,7 @@ Advanced Nested sampling
 
   - Parallelisation of Monte Carlo methods
   
+    - https://arxiv.org/abs/2101.09675
     - low-efficiency farming out
     - replace multiple points
     - 

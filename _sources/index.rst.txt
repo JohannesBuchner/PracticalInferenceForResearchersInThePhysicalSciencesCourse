@@ -9,6 +9,7 @@ by Francesca Capel (ODSL), Johannes Buchner (MPE)
 
    preliminaries
    install
+   BooksAndPapers.ipynb
 
 Important links
 ----------------
@@ -33,3 +34,4 @@ Contributors
 * Johannes Diehl
 * Benedikt Wach
 * Mikhail Mikhasenko
+* Tatiana Nechaeva
