@@ -439,7 +439,7 @@ div.rendered_html tbody tr:hover {
 <p>We have some target function (the likelihood times the prior) in some parameter space, and we want to integrate it.</p>
 <p>As a toy example, we chose the following likelihood:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -452,7 +452,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>And we assume our prior is uniform in the domain -1/2 to +1/2 in each parameter. We use two parameters at the moment.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -464,7 +464,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>Lets plot this function in 2d:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -508,7 +508,7 @@ div.rendered_html tbody tr:hover {
 <p>In words, the next point is suggested by a Gaussian draw around the current point.</p>
 <p><img alt="Gaussian proposal" src="_images/gaussian-proposal.jpg" /></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -518,7 +518,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -526,6 +526,24 @@ div.rendered_html tbody tr:hover {
 <span class="n">proposed_point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">previous_point</span><span class="p">,</span> <span class="n">proposal_sigma</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">proposed_point</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([-0.00048489, -0.00087557])
+</pre></div></div>
 </div>
 <p>The final ingredient is the acceptance rule, to decide whether we stay with the current point or accept the proposed point. The rule is very simple and says:</p>
 <p><em>We accept with a probability :math:`alpha`, which is the target probability ratio of the current to the proposed point</em>:</p>
@@ -538,8 +556,8 @@ div.rendered_html tbody tr:hover {
 </ul>
 <p>This is called the <strong>Metropolis algorithm</strong>. There is also an extension, the Metropolis-Hasting algorithm, for asymmetric transition kernels.</p>
 <p>Lets implement our update rule:</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -559,8 +577,20 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-fg">  File </span><span class="ansi-green-fg">&#34;&lt;ipython-input-11-de39cf31e82f&gt;&#34;</span><span class="ansi-cyan-fg">, line </span><span class="ansi-green-fg">3</span>
+<span class="ansi-red-fg">    prob_new = # call loglikelihood using *theta_new, and convert to linear from ln</span>
+               ^
+<span class="ansi-red-fg">SyntaxError</span><span class="ansi-red-fg">:</span> invalid syntax
+
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -586,6 +616,23 @@ div.rendered_html tbody tr:hover {
 
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-12-59a7c029d70b&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">     11</span>
+<span class="ansi-green-intense-fg ansi-bold">     12</span>     <span class="ansi-red-fg"># do we accept this point?</span>
+<span class="ansi-green-fg">---&gt; 13</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">if</span> metropolis_algorithm<span class="ansi-blue-fg">(</span>proposed_point<span class="ansi-blue-fg">,</span> previous_point<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">     14</span>         Naccepts <span class="ansi-blue-fg">+=</span> <span class="ansi-cyan-fg">1</span>
+<span class="ansi-green-intense-fg ansi-bold">     15</span>         next_point <span class="ansi-blue-fg">=</span> proposed_point
+
+<span class="ansi-red-fg">NameError</span>: name &#39;metropolis_algorithm&#39; is not defined
+</pre></div></div>
 </div>
 <p>Lets already go ahead and make several chains, so we get a better feel for the typical behaviour:</p>
 <div class="nbinput nblast docutils container">
@@ -646,7 +693,7 @@ acceptance rates: 92.4%, 90.6%, 92.1%, 92.3%
 <p>As a rule of thumb for Metropolis MCMC:</p>
 <ul class="simple">
 <li><p>23% is ideal (unless in very low dimensions)</p></li>
-<li><p>&gt;50% indicates the proposal is too small and the algorithm performs a levy-flight.</p></li>
+<li><p>&gt;50% indicates the proposal is too small and the algorithm performs a random walk.</p></li>
 <li><p>0% indicates the chain is stuck: The proposal is too wide and does not find good nearby points.</p></li>
 </ul>
 <div class="nbinput nblast docutils container">
@@ -682,7 +729,7 @@ acceptance rates: 92.4%, 90.6%, 92.1%, 92.3%
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/3-Markov-Chain-Monte-Carlo_23_0.png" src="_images/3-Markov-Chain-Monte-Carlo_23_0.png" />
+<img alt="_images/3-Markov-Chain-Monte-Carlo_24_0.png" src="_images/3-Markov-Chain-Monte-Carlo_24_0.png" />
 </div>
 </div>
 <div class="section" id="Trace-plots">
@@ -708,21 +755,21 @@ acceptance rates: 92.4%, 90.6%, 92.1%, 92.3%
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/3-Markov-Chain-Monte-Carlo_26_0.png" src="_images/3-Markov-Chain-Monte-Carlo_26_0.png" />
+<img alt="_images/3-Markov-Chain-Monte-Carlo_27_0.png" src="_images/3-Markov-Chain-Monte-Carlo_27_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/3-Markov-Chain-Monte-Carlo_26_1.png" src="_images/3-Markov-Chain-Monte-Carlo_26_1.png" />
+<img alt="_images/3-Markov-Chain-Monte-Carlo_27_1.png" src="_images/3-Markov-Chain-Monte-Carlo_27_1.png" />
 </div>
 </div>
 </div>
 <div class="section" id="Marginal-probability-distribution">
 <h3>Marginal probability distribution<a class="headerlink" href="#Marginal-probability-distribution" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -730,7 +777,8 @@ acceptance rates: 92.4%, 90.6%, 92.1%, 92.3%
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 
     <span class="c1"># TODO by you: plot all four chains instead of mychain</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">mychain</span><span class="p">)[:,</span><span class="n">i</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">chain</span> <span class="ow">in</span> <span class="n">chains</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">chain</span><span class="p">[:,</span><span class="n">i</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">)</span>
 
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Parameter </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Number of samples&quot;</span><span class="p">)</span>
@@ -742,15 +790,26 @@ acceptance rates: 92.4%, 90.6%, 92.1%, 92.3%
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/3-Markov-Chain-Monte-Carlo_28_0.png" src="_images/3-Markov-Chain-Monte-Carlo_28_0.png" />
-</div>
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-7-f5067bee8c25&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span>     <span class="ansi-red-fg"># TODO by you: plot all four chains instead of mychain</span>
+<span class="ansi-green-fg">----&gt; 5</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">for</span> chain <span class="ansi-green-fg">in</span> chains<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">      6</span>         plt<span class="ansi-blue-fg">.</span>hist<span class="ansi-blue-fg">(</span>chain<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">:</span><span class="ansi-blue-fg">,</span>i<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span> bins<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">100</span><span class="ansi-blue-fg">,</span> histtype<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;step&#39;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      7</span>
+
+<span class="ansi-red-fg">NameError</span>: name &#39;chains&#39; is not defined
+</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/3-Markov-Chain-Monte-Carlo_28_1.png" src="_images/3-Markov-Chain-Monte-Carlo_28_1.png" />
-</div>
+<div class="highlight"><pre>
+&lt;Figure size 432x288 with 0 Axes&gt;
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -781,7 +840,7 @@ acceptance rates: 92.4%, 90.6%, 92.1%, 92.3%
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/3-Markov-Chain-Monte-Carlo_31_0.png" src="_images/3-Markov-Chain-Monte-Carlo_31_0.png" />
+<img alt="_images/3-Markov-Chain-Monte-Carlo_32_0.png" src="_images/3-Markov-Chain-Monte-Carlo_32_0.png" />
 </div>
 </div>
 <p>If the histograms are quite different between chunks, the chain has not converged.</p>
@@ -812,13 +871,13 @@ acceptance rates: 92.4%, 90.6%, 92.1%, 92.3%
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/3-Markov-Chain-Monte-Carlo_33_0.png" src="_images/3-Markov-Chain-Monte-Carlo_33_0.png" />
+<img alt="_images/3-Markov-Chain-Monte-Carlo_34_0.png" src="_images/3-Markov-Chain-Monte-Carlo_34_0.png" />
 </div>
 </div>
 <p>Ideally, we want all of the markers (x and o) to line up.</p>
 <p>We can quantify this by comparing the variance of the means within the chunks and across chains:</p>
 <ul class="simple">
-<li><p>Let <span class="math notranslate nohighlight">\(W\)</span> be the average of the chunk variances</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(W\)</span> be the average of the within-chain variances.</p></li>
 <li><p>Let <span class="math notranslate nohighlight">\(M_i\)</span> be the mean in chain i, and <span class="math notranslate nohighlight">\(M\)</span> the overall mean</p></li>
 <li><p>Let <span class="math notranslate nohighlight">\(B\)</span> be the variance of M_ij: <span class="math notranslate nohighlight">\(B=\frac{1}{m-1}\sum_{i=1}^m (M_i - M)^2\)</span></p></li>
 <li><p>Let <span class="math notranslate nohighlight">\(\hat{R} \approx \sqrt{1 + B/W}\)</span></p></li>

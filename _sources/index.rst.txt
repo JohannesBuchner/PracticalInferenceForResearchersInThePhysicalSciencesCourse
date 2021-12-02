@@ -11,6 +11,19 @@ by Francesca Capel (ODSL), Johannes Buchner (MPE)
    install
    BooksAndPapers.ipynb
 
+Lecture recordings
+------------------
+
+* (1/6) Bayesian inference workflow in astronomy and physics
+* (2/6) Bayesian model comparison, curse of dimensionality, Importance Sampling
+* (3/6) Markov Chain Monte Carlo (MCMC) and diagnostics
+* (4/6) Hamiltonian Monte Carlo (HMC) by Dr. Francesca Capel
+* (5/6) Nested Sampling from scratch - Practical Inference for Researchers in the Physical Sciences
+* (6/6) State-of-the art in nested sampling and MCMC: literature review
+
+Play all on youtube: https://www.youtube.com/watch?v=D2P6xBR_2bQ&list=PLXOfJVzebj3ZKhgW_0S987FC-lR2bGzjU
+
+
 Important links
 ----------------
 

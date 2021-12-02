@@ -439,8 +439,28 @@ div.rendered_html tbody tr:hover {
 <p>We have some target function (the likelihood times the prior) in some parameter space, and we want to integrate it. The target function may be in a odd shape, such as a banana.</p>
 <p><img alt="banana" src="_images/banana.png" /></p>
 <p>As a toy example, we choose the following likelihood (taken from <a class="reference external" href="https://en.wikipedia.org/wiki/Rosenbrock_function">here</a>):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">myfunc</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">myfunc</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[1 2 3 4]
+</pre></div></div>
+</div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -457,12 +477,12 @@ div.rendered_html tbody tr:hover {
 <p>We use two parameters at the moment. You can try going to higher dimensions later.</p>
 <p>The function is used like this:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="nb">print</span><span class="p">(</span><span class="n">loglikelihood</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))</span>
-<span class="n">mypoint</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]</span>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">loglikelihood</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))</span>
+<span class="n">mypoint</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">loglikelihood</span><span class="p">(</span><span class="o">*</span><span class="n">mypoint</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -472,12 +492,12 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
--200.0
--1802.0
+-1002.0
+-2602.0
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -488,8 +508,8 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <p>Lets plot this function in 2d:</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -500,8 +520,26 @@ div.rendered_html tbody tr:hover {
 
 <span class="c1"># TODO by you! (meshgrid and plt.imshow can be helpful)</span>
 
+<span class="c1"># solution A</span>
+<span class="n">grid_unnormalised_logposterior</span> <span class="o">=</span> <span class="p">[[</span><span class="n">loglikelihood</span><span class="p">(</span><span class="n">ai</span><span class="p">,</span> <span class="n">bi</span><span class="p">)</span> <span class="k">for</span> <span class="n">ai</span> <span class="ow">in</span> <span class="n">a</span><span class="p">]</span> <span class="k">for</span> <span class="n">bi</span> <span class="ow">in</span> <span class="n">b</span><span class="p">]</span>
+
+<span class="c1"># solution B</span>
+<span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">grid_unnormalised_logposterior</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">loglikelihood</span><span class="p">)(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+      <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">grid_unnormalised_logposterior</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
+      <span class="n">extent</span><span class="o">=</span><span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">),</span>
+      <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray_r&#39;</span><span class="p">);</span>
 
 </pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/2-importance-sampling_8_0.png" src="_images/2-importance-sampling_8_0.png" />
 </div>
 </div>
 </div>
@@ -509,7 +547,7 @@ div.rendered_html tbody tr:hover {
 <h2>Importance sampling motivation<a class="headerlink" href="#Importance-sampling-motivation" title="Permalink to this headline">¶</a></h2>
 <p>Instead of a uniform spaced deterministic grid, lets now use uniformly distributed <em>random</em> points:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -525,12 +563,12 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/2-importance-sampling_10_0.png" src="_images/2-importance-sampling_10_0.png" />
+<img alt="_images/2-importance-sampling_11_0.png" src="_images/2-importance-sampling_11_0.png" />
 </div>
 </div>
 <p>If we evaluate the likelihood at each point:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -539,7 +577,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -551,14 +589,30 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/2-importance-sampling_13_0.png" src="_images/2-importance-sampling_13_0.png" />
+<img alt="_images/2-importance-sampling_14_0.png" src="_images/2-importance-sampling_14_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">proposed_samples_loglike</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/2-importance-sampling_15_0.png" src="_images/2-importance-sampling_15_0.png" />
 </div>
 </div>
 <p>Monte Carlo integration tells us that</p>
 <p>$Z=:nbsphinx-math:<cite>int `d:nbsphinx-math:</cite>theta <cite>f(:nbsphinx-math:</cite>theta`) <span class="math">\approx `:nbsphinx-math:</span>frac{1}{N}` <span class="math">\sum</span>_{i=1}^N f(<span class="math">\theta</span>_i) $</p>
 <p>The agreement is exact when <span class="math notranslate nohighlight">\(N\rightarrow \infty\)</span>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -571,12 +625,12 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-0.0015598944013746816
+0.0016144095224249549
 </pre></div></div>
 </div>
 </div>
@@ -586,7 +640,7 @@ div.rendered_html tbody tr:hover {
 <p>We can compute the effective number of samples <a class="reference external" href="https://arxiv.org/pdf/0907.1254.pdf">can be defined as</a>:</p>
 <p><span class="math notranslate nohighlight">\(ESS = \frac{N}{1 + C^2}\)</span> with <span class="math notranslate nohighlight">\(C^2=\frac{1}{N}\sum_i\left(N \times \frac{w_i}{\sum_i w_i} - 1\right)^2\)</span></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -598,7 +652,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -611,7 +665,7 @@ div.rendered_html tbody tr:hover {
 <h2>Exercise 1 (20 points)<a class="headerlink" href="#Exercise-1-(20-points)" title="Permalink to this headline">¶</a></h2>
 <p>1a) Measure the variance in the integral estimate by running the method a few times.</p>
 <p>1b) Vary the number of samples drawn. Plot variance vs number of samples.</p>
-<p>1c) For a integral estimate based on a single sample, the variance expected is the true (unknown) function variance. For <span class="math notranslate nohighlight">\(N_{draw}\)</span> points, it should decline linearly: <span class="math notranslate nohighlight">\(Var(f)\)</span> <span class="math notranslate nohighlight">\(Var(Z)=Var(f) / N_{draw}\)</span>. How does the variance behave empirically with <span class="math notranslate nohighlight">\(N_{draw}\)</span>?</p>
+<p>1c) For a integral estimate based on a single sample, the variance expected is the true (unknown) function variance <span class="math notranslate nohighlight">\(Var(f)\)</span>. For <span class="math notranslate nohighlight">\(N_{draw}\)</span> points, it should decline linearly: <span class="math notranslate nohighlight">\(Var(Z)=Var(f) / N_{draw}\)</span>. How does the variance behave empirically with <span class="math notranslate nohighlight">\(N_{draw}\)</span>?</p>
 </div>
 </div>
 <div class="section" id="Importance-Sampling">
@@ -624,7 +678,7 @@ div.rendered_html tbody tr:hover {
 <p><img alt="importance sampling" src="_images/Importance-Sampling.png" /></p>
 <p>Lets try a narrow Gaussian centered at (0.1, 0.1):</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -644,13 +698,13 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/2-importance-sampling_22_0.png" src="_images/2-importance-sampling_22_0.png" />
+<img alt="_images/2-importance-sampling_24_0.png" src="_images/2-importance-sampling_24_0.png" />
 </div>
 </div>
 <p>It looks like we are getting many more “hits” on high probability regions now.</p>
 <p>But our proposal is biased. The bias is the probability density of our proposal function:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -669,7 +723,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/2-importance-sampling_24_0.png" src="_images/2-importance-sampling_24_0.png" />
+<img alt="_images/2-importance-sampling_26_0.png" src="_images/2-importance-sampling_26_0.png" />
 </div>
 </div>
 <p>Importance weighting is adjusting the weights in our sum from</p>
@@ -678,7 +732,7 @@ div.rendered_html tbody tr:hover {
 <p>$Z:nbsphinx-math:<cite>approx `:nbsphinx-math:</cite>frac{1}{N}` <span class="math">\sum</span>_{i=1}^N f(<span class="math">\theta</span>_i)/I(<span class="math">\theta</span>_i) $</p>
 <p>In words, we down-weight samples where the proposal had high probability.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -691,19 +745,19 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-0.0018726226854311238
+0.0016795042220034639
 </pre></div></div>
 </div>
 </div>
 <div class="section" id="Effective-sample-size">
 <h1>Effective sample size<a class="headerlink" href="#Effective-sample-size" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -712,12 +766,12 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-85
+111
 </pre></div></div>
 </div>
 </div>
@@ -741,20 +795,20 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/2-importance-sampling_30_0.png" src="_images/2-importance-sampling_30_0.png" />
+<img alt="_images/2-importance-sampling_32_0.png" src="_images/2-importance-sampling_32_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/2-importance-sampling_30_1.png" src="_images/2-importance-sampling_30_1.png" />
+<img alt="_images/2-importance-sampling_32_1.png" src="_images/2-importance-sampling_32_1.png" />
 </div>
 </div>
 <div class="section" id="Unweighted-posterior-samples">
 <h2>Unweighted posterior samples<a class="headerlink" href="#Unweighted-posterior-samples" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -767,7 +821,35 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">indices_chosen</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([1076, 3451, 3116,  174,  286, 2739, 2224, 1614, 1614, 2173, 2631,
+       3854, 1076, 3854, 2547, 1760,  633,  563, 1331,  435, 2184,  128,
+       2736, 1582,  144, 3226, 3757, 2618, 2098,  158, 2224, 3871, 3684,
+       1582, 2286, 3863, 3603, 2641, 1475,  179, 3199,  475, 2286,  435,
+       3132, 2444,  735, 1193, 3801, 2823,  735, 3757, 1939,  435, 2606,
+       1614, 3823,  660, 1391, 3860,  384, 1076, 2703, 3190, 1966, 3310,
+       1226,  900, 3862, 3603,   55,  475, 3175, 2555, 1610, 3539, 2703,
+       2198, 3684, 2764, 1760,  633, 3539, 3603, 3765, 3263, 2444, 3477,
+       1331, 3116, 3096, 1622, 2371, 3603, 1614, 3765,  563, 1582, 1076,
+       3863, 2993, 3132, 3296,  568, 3451, 3503,  633, 2441, 1076, 1556,
+       2778])
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -779,7 +861,23 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/2-importance-sampling_33_0.png" src="_images/2-importance-sampling_33_0.png" />
+<img alt="_images/2-importance-sampling_36_0.png" src="_images/2-importance-sampling_36_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">unweighted_posterior_samples</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">cumulative</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">40</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/2-importance-sampling_37_0.png" src="_images/2-importance-sampling_37_0.png" />
 </div>
 </div>
 </div>
@@ -795,11 +893,11 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Quality-of-importance-sampling">
 <h2>Quality of importance sampling<a class="headerlink" href="#Quality-of-importance-sampling" title="Permalink to this headline">¶</a></h2>
 <p>The variance of the Monte Carlo estimator of <span class="math notranslate nohighlight">\(Z\)</span> is driven by the variance in the sum terms. Here for importance sampling:</p>
-<p><span class="math notranslate nohighlight">\(Var(Z)=Var(f / W) / N_{draw}\)</span></p>
-<p>The variance is smallest when <span class="math notranslate nohighlight">\(W \propto f\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(Var(Z)=Var(f / I) / N_{draw}\)</span></p>
+<p>The variance is smallest when <span class="math notranslate nohighlight">\(I \propto f\)</span>.</p>
 <p>We can quantify this by the variance in the sampled points:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -808,16 +906,16 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&#39;Standard deviation on Z for Uniform sampling: 0.02718&#39;
+&#39;Standard deviation on Z for Uniform sampling: 0.02726&#39;
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -826,12 +924,12 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&#39;Standard deviation on Z for Importance sampling: 0.01270&#39;
+&#39;Standard deviation on Z for Importance sampling: 0.00992&#39;
 </pre></div></div>
 </div>
 </div>
@@ -839,13 +937,13 @@ div.rendered_html tbody tr:hover {
 <h2>Questions<a class="headerlink" href="#Questions" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Which method is better?</p></li>
-<li><p>Is the variance part of the effective size samples formula?</p></li>
+<li><p>Is the variance part of the effective number of samples formula?</p></li>
 </ul>
 </div>
 <div class="section" id="Exercise-2-(5-points)">
 <h2>Exercise 2 (5 points)<a class="headerlink" href="#Exercise-2-(5-points)" title="Permalink to this headline">¶</a></h2>
-<p>Find a 90% credible region from the importance sampling results.</p>
-<p>Hint: use the weighted posterior samples, respecting the weighting, or the resampled posterior points.</p>
+<p>Find a 90% credible interval from the importance sampling results for each paramter.</p>
+<p>Hint: use either the resampled posterior points, or the weighted posterior samples, respecting the weighting.</p>
 </div>
 <div class="section" id="Exercise-3-(10-points)">
 <h2>Exercise 3 (10 points)<a class="headerlink" href="#Exercise-3-(10-points)" title="Permalink to this headline">¶</a></h2>

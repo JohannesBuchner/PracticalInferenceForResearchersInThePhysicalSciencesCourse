@@ -194,8 +194,17 @@
 <p>everyone welcome to submit</p>
 <p>Breakout rooms automatically</p>
 <p>Names in Zoom</p>
-<p>Asking questions: helping others</p>
+<p>Asking questions:</p>
+<blockquote>
+<div><p>helping others</p>
+<p>helping me</p>
+</div></blockquote>
 <hr class="docutils" />
+<p>NS:</p>
+<blockquote>
+<div><p>not shown: var(Z)</p>
+<p>diagnose problems? –&gt; insertion order</p>
+</div></blockquote>
 <p>Illustrations</p>
 <p>Advanced Monte Carlo Methods</p>
 <ul class="simple">
@@ -246,11 +255,16 @@
 </ul>
 <p>Advanced Nested sampling</p>
 <blockquote>
-<div><ul class="simple">
+<div><ul>
+<li><p>purely geometric exploration</p></li>
+<li><p>divide and conquer</p></li>
+<li><p>transition kernel? -&gt; variants of MCMC</p></li>
+<li><p>here: LRPS scheme</p></li>
 <li><p>LRPS</p>
-<ul>
+<ul class="simple">
 <li><p>dynesty paper <a class="reference external" href="https://arxiv.org/abs/1904.02180">https://arxiv.org/abs/1904.02180</a></p></li>
 <li><p>Ellipses paper <a class="reference external" href="https://arxiv.org/abs/astro-ph/0508461">https://arxiv.org/abs/astro-ph/0508461</a></p></li>
+<li><p>geometric ideas will fail at high-d!</p></li>
 <li><p>HMC <a class="reference external" href="https://arxiv.org/abs/1005.0157">https://arxiv.org/abs/1005.0157</a></p></li>
 <li><dl class="simple">
 <dt>GMC <a class="reference external" href="https://www.mdpi.com/2504-3900/33/1/19/pdf">https://www.mdpi.com/2504-3900/33/1/19/pdf</a></dt><dd><ul>
@@ -259,24 +273,40 @@
 </dd>
 </dl>
 </li>
+<li><p>slice sampling (polychord)</p></li>
 </ul>
 </li>
 <li><p>diagnostics</p>
-<ul>
+<ul class="simple">
 <li><p>insertion order test: no good viz</p></li>
 <li><p>visualisations: NESTCHECK <a class="reference external" href="https://arxiv.org/abs/1804.06406">https://arxiv.org/abs/1804.06406</a></p></li>
 </ul>
 </li>
 <li><p>termination criteria</p></li>
 <li><p>Parallelisation of Monte Carlo methods</p>
-<ul>
+<ul class="simple">
 <li><p><a class="reference external" href="https://arxiv.org/abs/2101.09675">https://arxiv.org/abs/2101.09675</a></p></li>
 <li><p>low-efficiency farming out</p></li>
 <li><p>replace multiple points</p></li>
-<li></li>
 </ul>
 </li>
-<li></li>
+<li><p>benefits: PMDI</p></li>
+<li><p>when to use which algorithm?</p>
+<ul>
+<li><p>strong point of HMC: diagnostics, speed, scalable</p></li>
+<li><p>strong point of NS:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>global exploration, clear initialisation and termination point</p></li>
+<li><p>no gradients: expensive computer simulations</p></li>
+<li><p>multi-modal problems</p></li>
+<li><p>Bayesian model comparison?</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</li>
+<li><p>implementations</p></li>
 </ul>
 </div></blockquote>
 

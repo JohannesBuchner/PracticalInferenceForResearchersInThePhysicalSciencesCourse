@@ -20,10 +20,21 @@ Breakout rooms automatically
 Names in Zoom
 
 
-Asking questions: helping others
+Asking questions: 
+
+	helping others
+
+	helping me
 
 
 --------------------------
+
+NS: 
+
+   not shown: var(Z)
+
+   diagnose problems? --> insertion order
+
 
 Illustrations
 
@@ -82,13 +93,22 @@ Advanced MCMC
 
 Advanced Nested sampling
 
+  - purely geometric exploration
+  - divide and conquer
+  - transition kernel? -> variants of MCMC
+  - here: LRPS scheme
+
   - LRPS
 
     - dynesty paper https://arxiv.org/abs/1904.02180
     - Ellipses paper https://arxiv.org/abs/astro-ph/0508461
+
+    - geometric ideas will fail at high-d!
+    
     - HMC https://arxiv.org/abs/1005.0157
     - GMC https://www.mdpi.com/2504-3900/33/1/19/pdf
 	- smooth borders? http://djafari.free.fr/MaxEnt2014/papers/87_paper.pdf
+    - slice sampling (polychord)
 
   - diagnostics
 
@@ -102,11 +122,22 @@ Advanced Nested sampling
     - https://arxiv.org/abs/2101.09675
     - low-efficiency farming out
     - replace multiple points
-    - 
 
-  - 
+  - benefits: PMDI
 
+  - when to use which algorithm?
+  
+    - strong point of HMC: diagnostics, speed, scalable
 
+    - strong point of NS: 
+    
+       - global exploration, clear initialisation and termination point
+       - no gradients: expensive computer simulations
+
+       - multi-modal problems
+       - Bayesian model comparison?
+
+  - implementations
 
 
 
